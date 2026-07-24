@@ -281,7 +281,7 @@
         #gambarMembesar.is-zoomed { cursor: zoom-out; transform: scale(2.2); }
         .modal-hint { color: #d0d0d0; font-size: 0.8em; margin-top: 12px; background: rgba(0,0,0,0.6); padding: 4px 12px; border-radius: 20px; }
 
-        /* ================= PENYESUAIAN KHUSUS MOBILE (HP) ================= */
+        /* PENYESUAIAN KHUSUS MOBILE (HP) */
         @media (max-width: 600px) {
             .book-wrapper { padding: 4px; }
             .page-content { padding: 10px 12px; }
@@ -306,8 +306,8 @@
     <div class="book-wrapper">
         <div id="demoBook">
 
-            <!-- SAMPUL DEPAN -->
-            <div class="page --cover" data-density="hard">
+            <!-- SAMPUL DEPAN (Sudah Dihapus data-density="hard" agar Animasi Melengkung Halus) -->
+            <div class="page --cover">
                 <div class="cover-border">
                     <h1>KATALOG BURUNG</h1>
                     <p>Kawasan Gunung Lawu</p>
@@ -412,8 +412,8 @@
                 </div>
             </div>
 
-            <!-- SAMPUL BELAKANG -->
-            <div class="page --cover" data-density="hard">
+            <!-- SAMPUL BELAKANG (Sudah Dihapus data-density="hard") -->
+            <div class="page --cover">
                 <div class="cover-border">
                     <h2>TERIMA KASIH</h2>
                     <p style="font-size: 0.85em;">Katalog Keanekaragaman Hayati<br>Gunung Lawu</p>
@@ -440,7 +440,7 @@
     </div>
 
     <script>
-        // Inisialisasi Engine Flipbook 3D
+        // Inisialisasi Engine Flipbook 3D dengan Animasi Simetris & Halus
         const pageFlip = new St.PageFlip(document.getElementById('demoBook'), {
             width: 450,
             height: 600,
@@ -449,9 +449,11 @@
             maxWidth: 550,
             minHeight: 420,
             maxHeight: 750,
-            maxShadowOpacity: 0.5,
+            maxShadowOpacity: 0.6,
             showCover: true,
-            mobileScrollSupport: false
+            mobileScrollSupport: false,
+            flippingTime: 800,  // Durasi balik halaman diperhalus (800 ms)
+            drawShadow: true    // Aktifkan bayangan lengkungan kertas simetris
         });
 
         // Load halaman ke engine
