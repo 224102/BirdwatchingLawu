@@ -198,21 +198,24 @@
         /* --- KHUSUS TAMPILAN HP --- */
         @media (max-width: 768px) {
             .grid-layout {
-                display: flex;
-                flex-direction: column;
-                height: 100%;
-                overflow-y: auto;
-                padding: 15px;
-                box-sizing: border-box;
+                /* ... biarkan isinya tetap sama ... */
             }
 
-            /* PERBAIKAN 2: Mengunci tinggi mutlak (260px) agar Safari tidak memotong/menimbun player Google Drive */
+            /* --- PERBAIKAN BARU: Gunakan aspect-ratio --- */
             .video-box {
                 width: 100%;
-                height: 260px !important;
-                min-height: 260px !important;
+                height: auto !important;
+                min-height: unset !important;
                 flex-shrink: 0;
             }
+
+            .video-box iframe {
+                width: 100%;
+                aspect-ratio: 16 / 9; /* Membuat rasio otomatis seperti TV/YouTube */
+                height: auto !important;
+                flex: none; 
+            }
+            /* ------------------------------------------- */
 
             .desc-box {
                 width: 100%;
