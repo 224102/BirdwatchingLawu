@@ -249,13 +249,15 @@
         .controls {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             margin-top: 10px;
             margin-bottom: 15px;
             background: #ffffff;
             padding: 6px 16px;
             border-radius: 30px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .controls button {
@@ -267,6 +269,19 @@
             cursor: pointer;
             font-weight: 600;
             font-size: 0.85em;
+            transition: background 0.2s;
+        }
+
+        .controls button:hover {
+            background: #1f4008;
+        }
+
+        .btn-fullscreen {
+            background: #3b82f6 !important; /* Warna beda agar menonjol */
+        }
+
+        .btn-fullscreen:hover {
+            background: #2563eb !important;
         }
 
         /* MODAL ZOOM FOTO */
@@ -296,8 +311,8 @@
             .gallery-container img { width: 42px; height: 42px; }
             .audio-player { height: 28px; }
             .map-box { height: 120px; }
-            .controls { padding: 4px 12px; gap: 10px; }
-            .controls button { padding: 5px 12px; font-size: 0.8em; }
+            .controls { padding: 4px 10px; gap: 8px; }
+            .controls button { padding: 5px 10px; font-size: 0.78em; }
         }
     </style>
 </head>
@@ -421,6 +436,7 @@
         <button onclick="pageFlip.flipPrev()">&larr; Prev</button>
         <span id="page-num" style="font-size:0.8em; font-weight:600; color:#444;">Hal 1 / 4</span>
         <button onclick="pageFlip.flipNext()">Next &rarr;</button>
+        <button id="btn-fullscreen" class="btn-fullscreen" onclick="toggleFullScreen()">⛶ Layar Penuh</button>
     </div>
 
     <!-- MODAL FOTO ZOOM -->
@@ -433,7 +449,7 @@
     </div>
 
     <script>
-        // Inisialisasi Engine Flipbook 3D dengan Animasi Simetris & Halus
+        // Inisialisasi Engine Flipbook 3D
         const pageFlip = new St.PageFlip(document.getElementById('demoBook'), {
             width: 450,
             height: 600,
@@ -445,18 +461,16 @@
             maxShadowOpacity: 0.6,
             showCover: true,
             mobileScrollSupport: false,
-            flippingTime: 800,  // Durasi balik halaman diperhalus (800 ms)
-            drawShadow: true    // Aktifkan bayangan lengkungan kertas simetris
+            flippingTime: 800,
+            drawShadow: true
         });
 
         // Load halaman ke engine
         pageFlip.loadFromHTML(document.querySelectorAll('.page'));
 
-        // Indikator halaman + Otomatis hentikan video/audio saat halaman berpindah
+        // Indikator halaman + Auto pause media saat balik halaman
         pageFlip.on('flip', (e) => {
             document.getElementById('page-num').innerText = `Hal ${e.data + 1} / ${pageFlip.getPageCount()}`;
-            
-            // Hentikan pemutaran video/audio jika ada yang berbunyi
             document.querySelectorAll('video, audio').forEach(media => media.pause());
         });
 
@@ -472,8 +486,44 @@
             }
         });
 
-        // PENGAMAN TOUCH & KLIK KHUSUS UNTUK WIDGET INTERAKTIF
-        // (Catatan: .page-content sengaja tidak dimasukkan agar drag/swipe membalik halaman berjalan lancar)
+        // FUNGSI TOGGLE FULLSCREEN (LAYAR PENUH)
+        function toggleFullScreen() {
+            const isFull = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+            
+            if (!isFull) {
+                const docEl = document.documentElement;
+                if (docEl.requestFullscreen) {
+                    docEl.requestFullscreen();
+                } else if (docEl.webkitRequestFullscreen) { /* Safari / iOS / Chrome Lama */
+                    docEl.webkitRequestFullscreen();
+                } else if (docEl.msRequestFullscreen) { /* IE / Edge Lama */
+                    docEl.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        // Listener Perubahan Mode Fullscreen (Update Teks Tombol)
+        ['fullscreenchange', 'webkitfullscreenchange', 'msfullscreenchange'].forEach(evt => {
+            document.addEventListener(evt, () => {
+                const btn = document.getElementById('btn-fullscreen');
+                const isFull = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+                if (isFull) {
+                    btn.innerHTML = '🗗 Keluar Fullscreen';
+                } else {
+                    btn.innerHTML = '⛶ Layar Penuh';
+                }
+            });
+        });
+
+        // PENGAMAN TOUCH & KLIK WIDGET INTERAKTIF
         const interactiveElements = document.querySelectorAll('.gallery-container img, video, audio, iframe, .modal, .controls');
         interactiveElements.forEach(el => {
             ['pointerdown', 'mousedown', 'touchstart'].forEach(eventType => {
