@@ -27,7 +27,7 @@
         }
 
         .swiper {
-            width: 95%; /* Sedikit dilebarkan agar muat padding panah */
+            width: 95%; 
             max-width: 1100px; 
             height: 90vh;
             background-color: var(--card-bg);
@@ -49,10 +49,9 @@
         .grid-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-template-rows: 55% 45%; 
+            grid-template-rows: auto 1fr; /* Baris atas mengikuti tinggi asli video */
             gap: 15px;
             height: 100%;
-            /* PERBAIKAN 1: Padding 60px kiri-kanan untuk area aman panah navigasi */
             padding: 20px 60px; 
             box-sizing: border-box;
         }
@@ -66,26 +65,29 @@
         .video-box { 
             grid-column: 1; 
             grid-row: 1; 
-            background: #000; 
-            display: flex;
-            flex-direction: column;
+            background: #000;
             width: 100%;
-            height: 100%;
-            touch-action: auto !important;
-            pointer-events: auto !important;
         }
 
-        .video-box iframe { 
-            width: 100%; 
-            aspect-ratio: 16 / 9;
-            /* PERBAIKAN 2: Video otomatis di tengah (vertikal) di dalam area sisa, efek sinematik */
-            margin: auto 0; 
-            border: 0; 
-            display: block; 
-            flex: none;
+        /* --- SOLUSI MUTLAK UNTUK IFRAME GOOGLE DRIVE --- */
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* Memaksa rasio 16:9 sempurna */
+            height: 0;
+        }
+
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
             touch-action: auto !important;
             pointer-events: auto !important;
         }
+        /* ------------------------------------------------ */
 
         .video-source {
             background-color: #1a1a1a;
@@ -94,11 +96,12 @@
             padding: 8px 10px;
             text-align: right;
             border-top: 1px solid #333;
-            flex-shrink: 0; /* Memastikan teks sumber tidak tertimpa/mengecil */
+            display: block;
         }
 
         .desc-box {
-            grid-column: 2; grid-row: 1;
+            grid-column: 2; 
+            grid-row: 1;
             background: #f9fbf8;
             padding: 15px 20px;
             border-left: 5px solid var(--primary-color);
@@ -195,29 +198,19 @@
             pointer-events: none;
         }
 
-        /* --- KHUSUS TAMPILAN HP & SPLIT-SCREEN DESKTOP --- */
+        /* --- KHUSUS TAMPILAN HP --- */
         @media (max-width: 1024px) {
             .grid-layout {
                 display: flex;
                 flex-direction: column;
                 height: 100%;
-                overflow-y: auto;
-                /* Kembalikan padding menjadi standar di HP, karena panah sudah dihilangkan */
+                overflow-y: auto; /* Bisa di-scroll kalau konten panjang */
                 padding: 15px; 
             }
 
             .video-box {
                 width: 100%;
-                height: auto !important;
-                min-height: unset !important;
                 flex-shrink: 0;
-            }
-
-            .video-box iframe {
-                width: 100%;
-                aspect-ratio: 16 / 9;
-                height: auto !important;
-                margin: 0; /* Hapus margin tengah saat di HP */
             }
 
             .desc-box {
@@ -225,15 +218,15 @@
                 flex-shrink: 0;
                 margin-top: 12px;
                 padding: 15px;
+                box-sizing: border-box;
             }
 
             .map-box {
                 width: 100%;
-                height: 220px; 
-                min-height: 220px;
+                height: 250px; 
                 flex-shrink: 0;
                 margin-top: 12px;
-                margin-bottom: 35px;
+                margin-bottom: 30px;
                 background-color: #e5e3df;
             }
 
@@ -248,14 +241,15 @@
     <div class="swiper">
         <div class="swiper-wrapper">
 
-            <!-- ================= HALAMAN 1 (BURUNG PERTAMA) ================= -->
+            <!-- ================= HALAMAN 1 ================= -->
             <div class="swiper-slide">
                 <div class="grid-layout">
                     
                     <!-- KOTAK VIDEO -->
                     <div class="video-box swiper-no-swiping">
-                        <iframe src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" allow="autoplay; fullscreen" allowfullscreen></iframe> 
-                        
+                        <div class="iframe-container">
+                            <iframe src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        </div>
                         <div class="video-source">
                             Sumber Video: <strong>Tim Peneliti Internal / Lapangan</strong>
                         </div>
@@ -279,7 +273,6 @@
                                  alt="Pteruthius aenobarbus 1" 
                                  onclick="bukaFoto(this.src)" onerror="this.src='https://via.placeholder.com/65x65?text=Foto+Broken'">
                             
-                            <!-- Catatan: Link foto ke-2 dari Wikipedia sebelumnya memang broken (hilang dari server wiki), saya beri fallback 'onerror' agar tidak tampil logo file pecah -->
                             <img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Pteruthius_flaviscapis.jpg" 
                                  alt="Pteruthius aenobarbus 2" 
                                  onclick="bukaFoto(this.src)" onerror="this.src='https://via.placeholder.com/65x65?text=Tidak+Ada'">
@@ -303,12 +296,14 @@
             </div>
             <!-- ================= AKHIR HALAMAN 1 ================= -->
 
-            <!-- ================= HALAMAN 2 (BURUNG KEDUA) ================= -->
+            <!-- ================= HALAMAN 2 ================= -->
             <div class="swiper-slide">
                 <div class="grid-layout">
                     
                     <div class="video-box swiper-no-swiping">
-                        <iframe src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" allow="autoplay; fullscreen" allowfullscreen></iframe> 
+                        <div class="iframe-container">
+                            <iframe src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        </div>
                         <div class="video-source">
                             Sumber Video: <strong>Sumber Eksternal / Macaulay Library</strong>
                         </div>
