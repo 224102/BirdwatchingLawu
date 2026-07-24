@@ -3,88 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Katalog Burung Gunung Lawu</title>
+    <title>Katalog Burung Gunung Lawu - 3D Flipbook</title>
     
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <!-- PageFlip JS Library (Engine Buku 3D seperti Heyzine) -->
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 
     <style>
         :root {
             --primary-color: #2b580c; 
-            --bg-color: #eef2ec;
-            --card-bg: #ffffff;
+            --bg-color: #dbe4d8;
+            --page-bg: #fdfdfd;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- CONTAINER UTAMA BUKU --- */
+        .book-wrapper {
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        #demoBook {
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            background-color: transparent;
+        }
+
+        /* --- STYLING TIAP HALAMAN BUKU --- */
+        .page {
+            background-color: var(--page-bg);
+            border: 1px solid #e2e2e2;
             overflow: hidden;
         }
 
-        .swiper {
-            width: 95%; 
-            max-width: 1100px; 
-            height: 90vh;
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
-            position: relative;
-        }
-
-        .swiper-slide {
-            width: 100%;
+        .page-content {
+            padding: 25px;
             height: 100%;
-            background-color: var(--card-bg);
-            overflow-y: auto; /* Membiarkan konten di dalam slide bisa di-scroll jika panjang di HP */
-            -webkit-overflow-scrolling: touch;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: auto;
         }
 
-        /* --- TAMPILAN DESKTOP --- */
-        .grid-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto 1fr; 
-            gap: 20px;
-            height: 100%;
-            padding: 25px 65px; /* Spasi untuk tombol navigasi Swiper */
-            box-sizing: border-box;
+        /* HARD COVER (SAMPUL DEPAN & BELAKANG) */
+        .page.--cover {
+            background: linear-gradient(135deg, #2b580c 0%, #173504 100%);
+            color: #ffffff;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            border: none;
         }
 
-        .video-box, .desc-box, .map-box {
+        .page.--cover h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+        }
+
+        .page.--cover p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .cover-border {
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 30px;
             border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* --- MENGADOPSI TEKNIK .video-container DARI KODINGAN GERAK PARABOLA --- */
-        .video-box { 
-            grid-column: 1; 
-            grid-row: 1; 
+        /* METODE VIDEO 16:9 FIT HP/DESKTOP */
+        .video-box {
             background: #000;
-            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 12px;
         }
 
         .video-container {
             position: relative;
             width: 100%;
-            aspect-ratio: 16 / 9; /* Fit otomatis 16:9 di semua layar HP/Desktop */
+            aspect-ratio: 16 / 9;
         }
 
         .video-container iframe {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             border: 0;
         }
 
@@ -92,243 +125,261 @@
             background-color: #1a1a1a;
             color: #b0b0b0;
             font-size: 0.75em;
-            padding: 8px 12px;
+            padding: 6px 10px;
             text-align: right;
-            border-top: 1px solid #333;
-            display: block;
         }
 
-        /* KOTAK DESKRIPSI */
-        .desc-box {
-            grid-column: 2; 
-            grid-row: 1 / span 2;
-            background: #f9fbf8;
-            padding: 20px;
-            border-left: 5px solid var(--primary-color);
-            overflow-y: auto; 
-        }
-
-        .desc-box h2 { margin-top: 0; color: var(--primary-color); font-style: italic; font-size: 1.4em; }
+        /* TIPIFIKASI KONTEN */
+        h2 { margin-top: 0; color: var(--primary-color); font-style: italic; font-size: 1.3em; }
 
         .metadata {
-            background-color: #e8f5e9;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 0.9em;
-            margin: 10px 0 15px 0;
+            background-color: #eef5eb;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            margin: 10px 0;
         }
-        .metadata p { margin: 4px 0; }
+        .metadata p { margin: 3px 0; }
 
-        .gallery-container { display: flex; gap: 10px; margin: 10px 0; }
+        .gallery-container { display: flex; gap: 8px; margin: 8px 0; }
         .gallery-container img {
-            width: 70px; height: 70px;
+            width: 65px; height: 65px;
             object-fit: cover;
             border-radius: 6px;
             cursor: pointer;
             border: 1px solid #ccc;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s;
         }
-        .gallery-container img:hover { transform: scale(1.08); }
+        .gallery-container img:hover { transform: scale(1.05); }
 
         .audio-player { width: 100%; margin-top: 5px; outline: none; }
 
-        /* KOTAK MAPS */
-        .map-box { 
-            grid-column: 1; 
-            grid-row: 2; 
-            width: 100%;
-            height: 100%;
-            min-height: 200px;
+        .map-box {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            height: 180px;
         }
-        .map-box iframe { width: 100%; height: 100%; border: 0; display: block; }
+        .map-box iframe { width: 100%; height: 100%; border: 0; }
 
-        /* --- MODAL DETAIL ZOOM FOTO --- */
+        /* NOMOR HALAMAN BUKU */
+        .page-footer {
+            font-size: 0.8em;
+            color: #888;
+            text-align: center;
+            padding-top: 10px;
+            border-top: 1px dashed #ddd;
+            margin-top: 10px;
+        }
+
+        /* EFEK NAVIGASI TOMBOL BAWAH */
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+            background: #ffffff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .controls button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .controls button:hover { background: #1f4208; }
+
+        /* MODAL ZOOM FOTO */
         .modal {
-            display: none; position: fixed; z-index: 2000; left: 0; top: 0; 
+            display: none; position: fixed; z-index: 9999; left: 0; top: 0; 
             width: 100%; height: 100%; background: rgba(0,0,0,0.9);
             justify-content: center; align-items: center; flex-direction: column;
         }
-        .close-modal { position: absolute; top: 15px; right: 25px; color: #fff; font-size: 35px; cursor: pointer; z-index: 2001; }
-        .modal-content-wrapper { position: relative; max-width: 90vw; max-height: 80vh; display: flex; justify-content: center; align-items: center; }
-        #gambarMembesar { max-width: 100%; max-height: 80vh; object-fit: contain; cursor: zoom-in; transition: transform 0.3s ease; border-radius: 8px; }
-        #gambarMembesar.is-zoomed { cursor: zoom-out; transform: scale(2.5); }
+        .close-modal { position: absolute; top: 15px; right: 25px; color: #fff; font-size: 35px; cursor: pointer; }
+        #gambarMembesar { max-width: 90vw; max-height: 80vh; object-fit: contain; cursor: zoom-in; transition: transform 0.3s; border-radius: 8px; }
+        #gambarMembesar.is-zoomed { cursor: zoom-out; transform: scale(2.2); }
         .modal-hint { color: #d0d0d0; font-size: 0.8em; margin-top: 12px; background: rgba(0,0,0,0.6); padding: 4px 12px; border-radius: 20px; }
 
-        /* --- KHUSUS TAMPILAN HP (RESPONSIF MOBILE) --- */
-        @media (max-width: 1024px) {
-            .swiper {
-                width: 98%;
-                height: 95vh;
-                border-radius: 12px;
-            }
-
-            .grid-layout {
-                display: flex; 
-                flex-direction: column; 
-                height: auto;
-                min-height: 100%;
-                padding: 15px; 
-                gap: 15px;
-            }
-
-            .video-box {
-                width: 100%;
-                flex-shrink: 0;
-            }
-
-            .desc-box {
-                width: 100%;
-                flex-shrink: 0;
-                overflow-y: visible;
-            }
-
-            .map-box {
-                width: 100%;
-                height: 250px; 
-                flex-shrink: 0;
-                margin-bottom: 35px;
-            }
-
-            .swiper-button-next, .swiper-button-prev { display: none !important; }
+        /* RESPONSIF HP */
+        @media (max-width: 768px) {
+            .page-content { padding: 15px; }
+            .map-box { height: 150px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="swiper">
-        <div class="swiper-wrapper">
+    <div class="book-wrapper">
+        <div id="demoBook">
 
-            <!-- ================= SLIDE 1: BURUNG 1 ================= -->
-            <div class="swiper-slide">
-                <div class="grid-layout">
-                    
-                    <!-- KOTAK VIDEO DENGAN METODE .video-container -->
-                    <div class="video-box swiper-no-swiping">
-                        <div class="video-container">
-                            <iframe src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" title="Video Burung Ciu Kuning" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            <!-- ================= SAMPUL DEPAN (PAGE 1) ================= -->
+            <div class="page --cover" data-density="hard">
+                <div class="cover-border">
+                    <h1>KATALOG BURUNG</h1>
+                    <p>Kawasan Gunung Lawu</p>
+                    <div style="margin-top: 40px; font-size: 0.8em; opacity: 0.7;">
+                        📖 Tarik ujung kertas / gunakan panah untuk membuka buku
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= SPESIES 1: HALAMAN KIRI (PAGE 2) ================= -->
+            <div class="page">
+                <div class="page-content">
+                    <div>
+                        <span style="font-size:0.75em; color:var(--primary-color); font-weight:bold;">DOKUMENTASI VISUAL</span>
+                        <h3 style="margin: 5px 0 15px 0; font-size: 1.1em;">Pteruthius aenobarbus</h3>
+                        
+                        <!-- Video Box -->
+                        <div class="video-box">
+                            <div class="video-container">
+                                <iframe src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                            </div>
+                            <div class="video-source">Sumber: Tim Peneliti Internal</div>
                         </div>
-                        <div class="video-source">
-                            Sumber Video: <strong>Tim Peneliti Internal / Lapangan</strong>
+
+                        <!-- Map Box -->
+                        <div class="map-box">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1183.1106818863855!2d111.18750931758943!3d-7.659767903179551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e798bc6289c5131%3A0xe18dc680d751e6bf!2sPertapaan%20Joglo!5e1!3m2!1sid!2sid!4v1784895107308!5m2!1sid!2sid" allowfullscreen="" loading="lazy"></iframe>
                         </div>
                     </div>
+                    <div class="page-footer">Halaman 1</div>
+                </div>
+            </div>
 
-                    <!-- KOTAK DESKRIPSI -->
-                    <div class="desc-box">
+            <!-- ================= SPESIES 1: HALAMAN KANAN (PAGE 3) ================= -->
+            <div class="page">
+                <div class="page-content">
+                    <div>
                         <h2>Pteruthius aenobarbus</h2>
-                        <p style="margin:0; font-size: 0.95em;"><strong>Nama Lokal:</strong> Ciu Kuning</p>
+                        <p style="margin:0; font-size: 0.9em;"><strong>Nama Lokal:</strong> Ciu Kuning</p>
                         
                         <div class="metadata">
                             <p><strong>Elevasi:</strong> 2.400 mdpl</p>
                             <p><strong>Habitat:</strong> Hutan kaliandra</p>
-                            <p><strong>Waktu:</strong> Pagi hari (10.30 WIB)</p>
+                            <p><strong>Waktu Observasi:</strong> Pagi hari (10.30 WIB)</p>
                         </div>
 
-                        <p style="font-size: 0.9em; line-height: 1.5;">Burung spesifik dataran tinggi yang aktif bergerak di tajuk pohon kawasan pegunungan Gunung Lawu.</p>
+                        <p style="font-size: 0.85em; line-height: 1.5; color: #444;">
+                            Burung spesifik dataran tinggi yang aktif bergerak di tajuk pohon kawasan pegunungan Gunung Lawu. Memiliki suara khas dan warna bulu mencolok.
+                        </p>
                         
-                        <strong style="font-size: 0.85em;">Foto Referensi (Klik untuk zoom detail):</strong>
+                        <strong style="font-size: 0.8em; display:block; margin-top:10px;">Foto Referensi (Klik Zoom):</strong>
                         <div class="gallery-container">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg" 
-                                 onclick="bukaFoto(this.src)" onerror="this.src='https://via.placeholder.com/70x70?text=Foto'">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg" onclick="bukaFoto(this.src)">
                         </div>
-                        <small style="display:block; font-size:0.75em; color:gray; margin-bottom:15px;">
-                            *Sumber: <a href="https://commons.wikimedia.org/wiki/File:White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg" target="_blank" style="color:gray;">Shiv's fotografia (CC BY-SA 4.0)</a>
-                        </small>
 
-                        <strong style="font-size: 0.85em;">Suara Burung:</strong>
-                        <audio controls class="audio-player swiper-no-swiping">
+                        <strong style="font-size: 0.8em; display:block; margin-top:10px;">Audio Rekaman Suara:</strong>
+                        <audio controls class="audio-player">
                             <source src="audio-burung-ciu.mp3" type="audio/mpeg">
                         </audio>
                     </div>
-
-                    <!-- PETA GOOGLE MAPS -->
-                    <div class="map-box">
-                        <iframe class="swiper-no-swiping" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1183.1106818863855!2d111.18750931758943!3d-7.659767903179551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e798bc6289c5131%3A0xe18dc680d751e6bf!2sPertapaan%20Joglo!5e1!3m2!1sid!2sid!4v1784895107308!5m2!1sid!2sid" allowfullscreen="" loading="lazy"></iframe>
-                    </div>
-
+                    <div class="page-footer">Halaman 2</div>
                 </div>
             </div>
-            <!-- ================= AKHIR SLIDE 1 ================= -->
 
-
-            <!-- ================= SLIDE 2: BURUNG 2 (FLIPBOOK) ================= -->
-            <div class="swiper-slide">
-                <div class="grid-layout">
-                    
-                    <div class="video-box swiper-no-swiping">
-                        <div class="video-container">
-                            <iframe src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" title="Video Burung Contoh 2" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            <!-- ================= SPESIES 2: HALAMAN KIRI (PAGE 4) ================= -->
+            <div class="page">
+                <div class="page-content">
+                    <div>
+                        <span style="font-size:0.75em; color:var(--primary-color); font-weight:bold;">DOKUMENTASI VISUAL</span>
+                        <h3 style="margin: 5px 0 15px 0; font-size: 1.1em;">Spesies Burung Kedua</h3>
+                        
+                        <div class="video-box">
+                            <div class="video-container">
+                                <iframe src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                            </div>
+                            <div class="video-source">Sumber: Dokumentasi Lapangan II</div>
                         </div>
-                        <div class="video-source">
-                            Sumber Video: <strong>Dokumentasi Lapangan II</strong>
+
+                        <div class="map-box" style="display:flex; justify-content:center; align-items:center; background:#eee; color:#666; font-size:0.9em;">
+                            Peta Lokasi Spesies 2
                         </div>
                     </div>
+                    <div class="page-footer">Halaman 3</div>
+                </div>
+            </div>
 
-                    <div class="desc-box">
+            <!-- ================= SPESIES 2: HALAMAN KANAN (PAGE 5) ================= -->
+            <div class="page">
+                <div class="page-content">
+                    <div>
                         <h2>Spesies Burung Kedua</h2>
-                        <p style="margin:0; font-size: 0.95em;"><strong>Nama Lokal:</strong> Burung Kedua</p>
+                        <p style="margin:0; font-size: 0.9em;"><strong>Nama Lokal:</strong> Burung Kedua</p>
                         
                         <div class="metadata">
                             <p><strong>Elevasi:</strong> 1.800 mdpl</p>
                             <p><strong>Habitat:</strong> Hutan Pinus</p>
-                            <p><strong>Waktu:</strong> Sore hari (15.00 WIB)</p>
+                            <p><strong>Waktu Observasi:</strong> Sore hari (15.00 WIB)</p>
                         </div>
 
-                        <p style="font-size: 0.9em; line-height: 1.5;">Halaman kedua sudah aktif kembali. Kamu bisa menggeser (*swipe*) ke kanan atau ke kiri untuk berpindah antar slide burung.</p>
+                        <p style="font-size: 0.85em; line-height: 1.5; color: #444;">
+                            Ini adalah lembaran halaman kedua dari buku katalog. Tampilan dua halaman ini menyatu dengan efek lipatan tengah layaknya buku tercetak asli.
+                        </p>
                     </div>
-
-                    <div class="map-box" style="display:flex; justify-content:center; align-items:center; background:#e0e0e0; color:#666;">
-                        <p>Peta Lokasi Spesies 2</p>
-                    </div>
-
+                    <div class="page-footer">Halaman 4</div>
                 </div>
             </div>
-            <!-- ================= AKHIR SLIDE 2 ================= -->
+
+            <!-- ================= SAMPUL BELAKANG (PAGE 6) ================= -->
+            <div class="page --cover" data-density="hard">
+                <div class="cover-border">
+                    <h2>TERIMA KASIH</h2>
+                    <p style="font-size: 0.9em;">Katalog Keanekaragaman Hayati<br>Gunung Lawu</p>
+                </div>
+            </div>
 
         </div>
-        
-        <!-- Panah Navigasi Swiper (Desktop) -->
-        <div class="swiper-button-next" style="color: var(--primary-color);"></div>
-        <div class="swiper-button-prev" style="color: var(--primary-color);"></div>
-        <!-- Titik Indikator Swiper -->
-        <div class="swiper-pagination"></div>
     </div>
 
-    <!-- MODAL DETAIL FOTO ZOOM -->
+    <!-- TOMBOL KONTROL NAVIGASI BUKU -->
+    <div class="controls">
+        <button onclick="pageFlip.flipPrev()">&mathbf;&larr; Prev</button>
+        <span id="page-num" style="font-size:0.85em; font-weight:600; color:#444;">Hal 1 / 6</span>
+        <button onclick="pageFlip.flipNext()">Next &mathbf;&rarr;</button>
+    </div>
+
+    <!-- MODAL FOTO ZOOM -->
     <div id="modalFoto" class="modal" onclick="tutupFotoLuar(event)">
         <span class="close-modal" onclick="tutupFoto()">&times;</span>
         <div class="modal-content-wrapper">
             <img id="gambarMembesar" src="" onclick="toggleZoom(event)">
         </div>
-        <div class="modal-hint">💡 Klik pada bagian burung untuk perbesar detail | Klik luar untuk tutup</div>
+        <div class="modal-hint">💡 Klik foto untuk perbesar detail | Klik luar untuk tutup</div>
     </div>
 
-    <!-- SCRIPT SWIPER -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-
     <script>
-        const swiper = new Swiper('.swiper', {
-            slidesPerView: 1,
-            spaceBetween: 0,
-            loop: false,
-            
-            // Mengatur swipe flipbook agar aktif
-            noSwiping: true,
-            noSwipingClass: 'swiper-no-swiping',
-            
-            touchStartPreventDefault: false,
-            keyboard: { enabled: true },
-            
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
+        // Inisialisasi Engine Flipbook 3D (StPageFlip)
+        const pageFlip = new St.PageFlip(document.getElementById('demoBook'), {
+            width: 450, // Lebar per 1 halaman (total 2 halaman = 900px di Desktop)
+            height: 600, // Tinggi buku
+            size: "stretch",
+            minWidth: 300,
+            maxWidth: 550,
+            minHeight: 450,
+            maxHeight: 750,
+            maxShadowOpacity: 0.5, // Efek bayangan lipatan kertas
+            showCover: true, // Ada sampul depan & belakang
+            mobileScrollSupport: false
         });
 
-        // --- SCRIPT INTERAKTIF ZOOM FOTO ---
+        // Load semua element kelas .page ke dalam engine buku
+        pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+
+        // Update indikator nomor halaman saat dibalik
+        pageFlip.on('flip', (e) => {
+            document.getElementById('page-num').innerText = `Hal ${e.data + 1} / ${pageFlip.getPageCount()}`;
+        });
+
+        // --- SCRIPT MODAL ZOOM FOTO ---
         let isZoomed = false;
 
         function bukaFoto(src) {
@@ -360,9 +411,7 @@
         }
 
         function tutupFotoLuar(event) {
-            if (event.target.id === 'modalFoto' || event.target.classList.contains('modal-content-wrapper')) {
-                tutupFoto();
-            }
+            if (event.target.id === 'modalFoto') tutupFoto();
         }
 
         function tutupFoto() {
