@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Katalog Burung Gunung Lawu - 3D Flipbook</title>
     
-    <!-- PageFlip JS Library (Engine Buku 3D seperti Heyzine) -->
+    <!-- PageFlip JS Library -->
     <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 
     <style>
@@ -30,7 +30,7 @@
             overflow-x: hidden;
         }
 
-        /* --- CONTAINER UTAMA BUKU --- */
+        /* CONTAINER UTAMA BUKU */
         .book-wrapper {
             position: relative;
             display: flex;
@@ -46,7 +46,7 @@
             background-color: transparent;
         }
 
-        /* --- STYLING TIAP HALAMAN BUKU --- */
+        /* STYLING TIAP HALAMAN BUKU */
         .page {
             background-color: var(--page-bg);
             border: 1px solid #e2e2e2;
@@ -99,34 +99,30 @@
             align-items: center;
         }
 
-        /* METODE VIDEO 16:9 FIT HP/DESKTOP */
-        .video-box {
-            background: #000;
+        /* ================= PERBAIKAN DUA TIPE VIDEO ================= */
+        .page-video {
             border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background: #000000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             margin-bottom: 12px;
+            display: block;
         }
 
-        .video-container {
-            position: relative;
+        /* TIPE 1: LANDSCAPE (16:9) */
+        .video-landscape {
             width: 100%;
             aspect-ratio: 16 / 9;
+            object-fit: contain;
         }
 
-        .video-container iframe {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border: 0;
-        }
-
-        .video-source {
-            background-color: #1a1a1a;
-            color: #b0b0b0;
-            font-size: 0.75em;
-            padding: 6px 10px;
-            text-align: right;
+        /* TIPE 2: PORTRAIT / VERTIKAL (9:16) */
+        .video-portrait {
+            height: 270px;
+            max-width: 100%;
+            aspect-ratio: 9 / 16;
+            margin-left: auto;
+            margin-right: auto;
+            object-fit: contain;
         }
 
         /* TIPIFIKASI KONTEN */
@@ -172,7 +168,7 @@
             margin-top: 10px;
         }
 
-        /* EFEK NAVIGASI TOMBOL BAWAH */
+        /* TOMBOL KONTROL BAWAH */
         .controls {
             display: flex;
             align-items: center;
@@ -204,11 +200,11 @@
             justify-content: center; align-items: center; flex-direction: column;
         }
         .close-modal { position: absolute; top: 15px; right: 25px; color: #fff; font-size: 35px; cursor: pointer; }
-        #gambarMembesar { max-width: 90vw; max-height: 80vh; object-fit: contain; cursor: zoom-in; transition: transform 0.3s; border-radius: 8px; }
+        .modal-content-wrapper { position: relative; max-width: 90vw; max-height: 80vh; display: flex; justify-content: center; align-items: center; }
+        #gambarMembesar { max-width: 100%; max-height: 80vh; object-fit: contain; cursor: zoom-in; transition: transform 0.3s; border-radius: 8px; }
         #gambarMembesar.is-zoomed { cursor: zoom-out; transform: scale(2.2); }
         .modal-hint { color: #d0d0d0; font-size: 0.8em; margin-top: 12px; background: rgba(0,0,0,0.6); padding: 4px 12px; border-radius: 20px; }
 
-        /* RESPONSIF HP */
         @media (max-width: 768px) {
             .page-content { padding: 15px; }
             .map-box { height: 150px; }
@@ -220,31 +216,30 @@
     <div class="book-wrapper">
         <div id="demoBook">
 
-            <!-- ================= SAMPUL DEPAN (PAGE 1) ================= -->
+            <!-- ================= SAMPUL DEPAN ================= -->
             <div class="page --cover" data-density="hard">
                 <div class="cover-border">
                     <h1>KATALOG BURUNG</h1>
                     <p>Kawasan Gunung Lawu</p>
                     <div style="margin-top: 40px; font-size: 0.8em; opacity: 0.7;">
-                        📖 Tarik ujung kertas / gunakan panah untuk membuka buku
+                        📖 Tarik ujung kertas / gunakan kursor panah untuk membuka buku
                     </div>
                 </div>
             </div>
 
-            <!-- ================= SPESIES 1: HALAMAN KIRI (PAGE 2) ================= -->
+            <!-- ================= SPESIES 1: VIDEO 16:9 (LANDSCAPE) ================= -->
             <div class="page">
                 <div class="page-content">
                     <div>
-                        <span style="font-size:0.75em; color:var(--primary-color); font-weight:bold;">DOKUMENTASI VISUAL</span>
-                        <h3 style="margin: 5px 0 15px 0; font-size: 1.1em;">Pteruthius aenobarbus</h3>
+                        <span style="font-size:0.75em; color:var(--primary-color); font-weight:bold;">DOKUMENTASI VISUAL (16:9)</span>
+                        <h3 style="margin: 5px 0 10px 0; font-size: 1.1em;">Pteruthius aenobarbus</h3>
                         
-                        <!-- Video Box -->
-                        <div class="video-box">
-                            <video controls playsinline style="width: 100%; border-radius: 8px; background: #000; display: block;">
-    <source src="video-burung.mp4" type="video/mp4">
-    Browser kamu tidak mendukung pemutar video ini.
-</video>
-                        </div>
+                        <!-- PAKAI CLASS 'video-landscape' UNTUK FORMAT 16:9 -->
+                        <video controls playsinline preload="metadata" class="page-video video-landscape">
+                            <source src="video/burung1.mp4" type="video/mp4">
+                            Browser kamu tidak mendukung pemutar video ini.
+                        </video>
+                        <div style="font-size: 0.75em; color: #666; text-align: right; margin-top: -8px; margin-bottom: 10px;">Sumber: Tim Peneliti Internal</div>
 
                         <!-- Map Box -->
                         <div class="map-box">
@@ -255,7 +250,7 @@
                 </div>
             </div>
 
-            <!-- ================= SPESIES 1: HALAMAN KANAN (PAGE 3) ================= -->
+            <!-- ================= SPESIES 1: DESKRIPSI ================= -->
             <div class="page">
                 <div class="page-content">
                     <div>
@@ -274,7 +269,7 @@
                         
                         <strong style="font-size: 0.8em; display:block; margin-top:10px;">Foto Referensi (Klik Zoom):</strong>
                         <div class="gallery-container">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg" onclick="bukaFoto(this.src)">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg" onclick="bukaFoto(this.src)" onerror="this.src='https://via.placeholder.com/70x70?text=Broken'">
                         </div>
 
                         <strong style="font-size: 0.8em; display:block; margin-top:10px;">Audio Rekaman Suara:</strong>
@@ -286,21 +281,21 @@
                 </div>
             </div>
 
-            <!-- ================= SPESIES 2: HALAMAN KIRI (PAGE 4) ================= -->
+            <!-- ================= SPESIES 2: VIDEO 9:16 (PORTRAIT) ================= -->
             <div class="page">
                 <div class="page-content">
                     <div>
-                        <span style="font-size:0.75em; color:var(--primary-color); font-weight:bold;">DOKUMENTASI VISUAL</span>
-                        <h3 style="margin: 5px 0 15px 0; font-size: 1.1em;">Spesies Burung Kedua</h3>
+                        <span style="font-size:0.75em; color:var(--primary-color); font-weight:bold;">DOKUMENTASI VISUAL (9:16)</span>
+                        <h3 style="margin: 5px 0 10px 0; font-size: 1.1em;">Spesies Burung Kedua</h3>
                         
-                        <div class="video-box">
-                            <div class="video-container">
-                                <iframe src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                            </div>
-                            <div class="video-source">Sumber: Dokumentasi Lapangan II</div>
-                        </div>
+                        <!-- PAKAI CLASS 'video-portrait' UNTUK FORMAT 9:16 / REELS -->
+                        <video controls playsinline preload="metadata" class="page-video video-portrait">
+                            <source src="video/burung2.mp4" type="video/mp4">
+                            Browser kamu tidak mendukung pemutar video ini.
+                        </video>
+                        <div style="font-size: 0.75em; color: #666; text-align: center; margin-top: -8px; margin-bottom: 10px;">Sumber: Dokumentasi Lapangan II</div>
 
-                        <div class="map-box" style="display:flex; justify-content:center; align-items:center; background:#eee; color:#666; font-size:0.9em;">
+                        <div class="map-box" style="display:flex; justify-content:center; align-items:center; background:#eee; color:#666; font-size:0.85em;">
                             Peta Lokasi Spesies 2
                         </div>
                     </div>
@@ -308,7 +303,7 @@
                 </div>
             </div>
 
-            <!-- ================= SPESIES 2: HALAMAN KANAN (PAGE 5) ================= -->
+            <!-- ================= SPESIES 2: DESKRIPSI ================= -->
             <div class="page">
                 <div class="page-content">
                     <div>
@@ -322,14 +317,14 @@
                         </div>
 
                         <p style="font-size: 0.85em; line-height: 1.5; color: #444;">
-                            Ini adalah lembaran halaman kedua dari buku katalog. Tampilan dua halaman ini menyatu dengan efek lipatan tengah layaknya buku tercetak asli.
+                            Halaman ini contoh penggunaan video vertikal (9:16) di halaman sebelumnya. Ukuran video otomatis menyesuaikan agar tidak meluap keluar buku.
                         </p>
                     </div>
                     <div class="page-footer">Halaman 4</div>
                 </div>
             </div>
 
-            <!-- ================= SAMPUL BELAKANG (PAGE 6) ================= -->
+            <!-- ================= SAMPUL BELAKANG ================= -->
             <div class="page --cover" data-density="hard">
                 <div class="cover-border">
                     <h2>TERIMA KASIH</h2>
@@ -340,11 +335,11 @@
         </div>
     </div>
 
-    <!-- TOMBOL KONTROL NAVIGASI BUKU -->
+    <!-- TOMBOL KONTROL BAWAH -->
     <div class="controls">
-        <button onclick="pageFlip.flipPrev()">&mathbf;&larr; Prev</button>
+        <button onclick="pageFlip.flipPrev()">&larr; Prev</button>
         <span id="page-num" style="font-size:0.85em; font-weight:600; color:#444;">Hal 1 / 6</span>
-        <button onclick="pageFlip.flipNext()">Next &mathbf;&rarr;</button>
+        <button onclick="pageFlip.flipNext()">Next &rarr;</button>
     </div>
 
     <!-- MODAL FOTO ZOOM -->
@@ -357,29 +352,38 @@
     </div>
 
     <script>
-        // Inisialisasi Engine Flipbook 3D (StPageFlip)
+        // Inisialisasi Engine Flipbook 3D
         const pageFlip = new St.PageFlip(document.getElementById('demoBook'), {
-            width: 450, // Lebar per 1 halaman (total 2 halaman = 900px di Desktop)
-            height: 600, // Tinggi buku
+            width: 450,
+            height: 600,
             size: "stretch",
             minWidth: 300,
             maxWidth: 550,
             minHeight: 450,
             maxHeight: 750,
-            maxShadowOpacity: 0.5, // Efek bayangan lipatan kertas
-            showCover: true, // Ada sampul depan & belakang
+            maxShadowOpacity: 0.5,
+            showCover: true,
             mobileScrollSupport: false
         });
 
-        // Load semua element kelas .page ke dalam engine buku
+        // Load halaman ke engine
         pageFlip.loadFromHTML(document.querySelectorAll('.page'));
 
-        // Update indikator nomor halaman saat dibalik
+        // Indikator halaman
         pageFlip.on('flip', (e) => {
             document.getElementById('page-num').innerText = `Hal ${e.data + 1} / ${pageFlip.getPageCount()}`;
         });
 
-        // --- SCRIPT MODAL ZOOM FOTO ---
+        // Navigasi Keyboard (Panah Kanan & Kiri)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+                pageFlip.flipNext();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                pageFlip.flipPrev();
+            }
+        });
+
+        // Modal Zoom Foto
         let isZoomed = false;
 
         function bukaFoto(src) {
