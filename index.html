@@ -62,8 +62,28 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
 
-        .video-box { grid-column: 1; grid-row: 1; background: #000; }
-        .video-box iframe { width: 100%; height: 100%; border: 0; display: block; }
+        /* Video Box Layout */
+        .video-box { 
+            grid-column: 1; 
+            grid-row: 1; 
+            background: #000; 
+            display: flex;
+            flex-direction: column;
+        }
+        .video-box iframe { 
+            flex: 1; 
+            width: 100%; 
+            border: 0; 
+            display: block; 
+        }
+        .video-source {
+            background-color: #1a1a1a;
+            color: #b0b0b0;
+            font-size: 0.75em;
+            padding: 5px 10px;
+            text-align: right;
+            border-top: 1px solid #333;
+        }
 
         .desc-box {
             grid-column: 2; grid-row: 1;
@@ -89,9 +109,13 @@
             width: 65px; height: 65px;
             object-fit: cover;
             border-radius: 6px;
-            cursor: zoom-in;
+            cursor: pointer;
             background-color: #e0e0e0;
             border: 1px solid #ccc;
+            transition: transform 0.2s ease;
+        }
+        .gallery-container img:hover {
+            transform: scale(1.05);
         }
 
         .audio-player { width: 100%; margin-top: 5px; }
@@ -99,16 +123,68 @@
         .map-box { grid-column: 1 / span 2; grid-row: 2; }
         .map-box iframe { width: 100%; height: 100%; border: 0; display: block; }
 
+        /* --- STYLES MODAL DETAIL ZOOM --- */
         .modal {
-            display: none; position: fixed; z-index: 2000;
-            left: 0; top: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            justify-content: center; align-items: center;
-            cursor: zoom-out;
+            display: none; 
+            position: fixed; 
+            z-index: 2000;
+            left: 0; top: 0; 
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            justify-content: center; 
+            align-items: center;
+            flex-direction: column;
+            user-select: none;
         }
-        .modal img { max-width: 90%; max-height: 90%; border-radius: 8px; }
 
-        /* --- KHUSUS TAMPILAN HP (IPHONE & ANDROID) --- */
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: #ffffff;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 2001;
+        }
+        .close-modal:hover { color: #bbb; }
+
+        .modal-content-wrapper {
+            position: relative;
+            max-width: 90vw;
+            max-height: 80vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+        }
+
+        #gambarMembesar {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            cursor: zoom-in;
+            transition: transform 0.3s ease, transform-origin 0.1s ease;
+            border-radius: 8px;
+        }
+
+        #gambarMembesar.is-zoomed {
+            cursor: zoom-out;
+            transform: scale(2.5); /* Tingkat Perbesaran 2.5x */
+        }
+
+        .modal-hint {
+            color: #d0d0d0;
+            font-size: 0.8em;
+            margin-top: 12px;
+            background: rgba(0,0,0,0.6);
+            padding: 4px 12px;
+            border-radius: 20px;
+            pointer-events: none;
+        }
+
+        /* --- KHUSUS TAMPILAN HP --- */
         @media (max-width: 768px) {
             .grid-layout {
                 display: flex;
@@ -121,8 +197,8 @@
 
             .video-box {
                 width: 100%;
-                height: 200px;
-                min-height: 200px;
+                height: 230px;
+                min-height: 230px;
                 flex-shrink: 0;
             }
 
@@ -160,8 +236,14 @@
             <div class="swiper-slide">
                 <div class="grid-layout">
                     
+                    <!-- KOTAK VIDEO GOOGLE DRIVE & SUMBER -->
                     <div class="video-box">
-                       <iframe src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" width="640" height="480"></iframe>  
+                        <iframe class="swiper-no-swiping" src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" allow="autoplay" allowfullscreen></iframe> 
+                        
+                        <!-- KETERANGAN SUMBER VIDEO -->
+                        <div class="video-source">
+                            Sumber Video: <strong>Tim Peneliti Internal / Lapangan</strong>
+                        </div>
                     </div>
 
                     <div class="desc-box">
@@ -176,14 +258,12 @@
 
                         <p style="font-size: 0.85em; line-height: 1.4;">Burung spesifik dataran tinggi yang aktif bergerak di tajuk pohon kawasan pegunungan Gunung Lawu.</p>
                         
-                        <strong style="font-size: 0.8em;">Foto Referensi:</strong>
+                        <strong style="font-size: 0.8em;">Foto Referensi (Klik untuk zoom detail):</strong>
                         <div class="gallery-container">
-                            <!-- Foto 1: Link alternatif Wikimedia tanpa proteksi header -->
                             <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg" 
                                  alt="Pteruthius aenobarbus 1" 
                                  onclick="bukaFoto(this.src)">
                             
-                            <!-- Foto 2 -->
                             <img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Pteruthius_flaviscapis.jpg" 
                                  alt="Pteruthius aenobarbus 2" 
                                  onclick="bukaFoto(this.src)">
@@ -211,8 +291,11 @@
             <div class="swiper-slide">
                 <div class="grid-layout">
                     
-                    <div class="video-box" style="display:flex; justify-content:center; align-items:center; color:white;">
-                        <p>Video Burung Kedua Di Sini</p>
+                    <div class="video-box">
+                        <iframe class="swiper-no-swiping" src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" allow="autoplay" allowfullscreen></iframe> 
+                        <div class="video-source">
+                            Sumber Video: <strong>Sumber Eksternal / Macaulay Library</strong>
+                        </div>
                     </div>
 
                     <div class="desc-box">
@@ -236,9 +319,13 @@
         <div class="swiper-pagination"></div>
     </div>
 
-    <!-- MODAL FOTO MEMBESAR -->
-    <div id="modalFoto" class="modal" onclick="tutupFoto()">
-        <img id="gambarMembesar" src="">
+    <!-- MODAL FOTO INTERAKTIF ZOOM -->
+    <div id="modalFoto" class="modal" onclick="tutupFotoLuar(event)">
+        <span class="close-modal" onclick="tutupFoto()">&times;</span>
+        <div class="modal-content-wrapper">
+            <img id="gambarMembesar" src="" onclick="toggleZoom(event)">
+        </div>
+        <div class="modal-hint">💡 Klik pada bagian burung untuk perbesar detail | Klik luar untuk tutup</div>
     </div>
 
     <!-- SCRIPT SWIPER -->
@@ -267,12 +354,50 @@
             },
         });
 
+        // --- SCRIPT INTERAKTIF DETAIL ZOOM FOTO ---
+        let isZoomed = false;
+
         function bukaFoto(src) {
-            document.getElementById('gambarMembesar').src = src;
+            const img = document.getElementById('gambarMembesar');
+            img.src = src;
+            img.classList.remove('is-zoomed');
+            img.style.transformOrigin = 'center center';
+            isZoomed = false;
             document.getElementById('modalFoto').style.display = 'flex';
         }
 
+        function toggleZoom(event) {
+            event.stopPropagation(); // Mencegah modal tertutup saat gambar diklik
+            const img = document.getElementById('gambarMembesar');
+
+            if (!isZoomed) {
+                // Hitung posisi koordinat klik user (dalam persentase)
+                const rect = img.getBoundingClientRect();
+                const x = ((event.clientX - rect.left) / rect.width) * 100;
+                const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+                // Atur titik pusat zoom tepat di tempat klik
+                img.style.transformOrigin = `${x}% ${y}%`;
+                img.classList.add('is-zoomed');
+                isZoomed = true;
+            } else {
+                img.classList.remove('is-zoomed');
+                img.style.transformOrigin = 'center center';
+                isZoomed = false;
+            }
+        }
+
+        function tutupFotoLuar(event) {
+            // Tutup hanya jika yang diklik adalah background hitam di luar gambar
+            if (event.target.id === 'modalFoto' || event.target.classList.contains('modal-content-wrapper')) {
+                tutupFoto();
+            }
+        }
+
         function tutupFoto() {
+            const img = document.getElementById('gambarMembesar');
+            img.classList.remove('is-zoomed');
+            isZoomed = false;
             document.getElementById('modalFoto').style.display = 'none';
         }
     </script>
