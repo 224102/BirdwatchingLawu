@@ -35,7 +35,6 @@
             color: var(--text-dark);
         }
 
-        /* CONTAINER UTAMA BUKU */
         .book-wrapper {
             position: relative;
             display: flex;
@@ -51,7 +50,6 @@
             background-color: transparent;
         }
 
-        /* STYLING TIAP HALAMAN BUKU */
         .page {
             background-color: var(--page-bg);
             border: 1px solid #e5e7eb;
@@ -67,7 +65,6 @@
             overflow-y: auto;
         }
 
-        /* HARD COVER */
         .page.--cover {
             background: linear-gradient(135deg, #2b580c 0%, #173504 100%);
             color: #ffffff;
@@ -104,7 +101,6 @@
             align-items: center;
         }
 
-        /* VIDEO STYLING */
         .page-video {
             border-radius: 8px;
             background: #000000;
@@ -128,7 +124,6 @@
             object-fit: contain;
         }
 
-        /* BADGES & TAGS */
         .badge-container {
             display: flex;
             gap: 6px;
@@ -158,7 +153,6 @@
             border: 1px solid #e5e7eb;
         }
 
-        /* HEADINGS & TEXT */
         h2.species-title {
             margin: 2px 0;
             color: var(--primary-color);
@@ -173,7 +167,6 @@
             margin-bottom: 12px;
         }
 
-        /* GRID METADATA */
         .meta-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -196,7 +189,6 @@
             font-size: 0.85em;
         }
 
-        /* KOTAK TAKSONOMI & INFO SEKUNDER */
         .info-card {
             background: #fafafa;
             border: 1px solid #f0f0f0;
@@ -212,9 +204,6 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
 
         .taxo-list {
@@ -232,19 +221,18 @@
             margin: 8px 0;
         }
 
-        /* GALLERY & AUDIO */
         .gallery-container { display: flex; gap: 8px; margin-top: 5px; }
         .gallery-container img {
-            width: 55px; height: 55px;
+            width: 60px; height: 60px;
             object-fit: cover;
             border-radius: 6px;
             cursor: pointer;
-            border: 1px solid #d1d5db;
+            border: 2px solid #2b580c;
             transition: transform 0.2s, box-shadow 0.2s;
         }
         .gallery-container img:hover { 
-            transform: scale(1.05);
-            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            transform: scale(1.08);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
         .audio-player { 
@@ -264,7 +252,6 @@
         }
         .map-box iframe { width: 100%; height: 100%; border: 0; }
 
-        /* FOOTER HALAMAN */
         .page-footer {
             font-size: 0.75em;
             color: var(--text-muted);
@@ -274,7 +261,6 @@
             margin-top: 8px;
         }
 
-        /* CONTROLS */
         .controls {
             display: flex;
             align-items: center;
@@ -301,8 +287,8 @@
 
         /* MODAL ZOOM FOTO */
         .modal {
-            display: none; position: fixed; z-index: 9999; left: 0; top: 0; 
-            width: 100%; height: 100%; background: rgba(0,0,0,0.9);
+            display: none; position: fixed; z-index: 99999; left: 0; top: 0; 
+            width: 100%; height: 100%; background: rgba(0,0,0,0.92);
             justify-content: center; align-items: center; flex-direction: column;
         }
         .close-modal { position: absolute; top: 15px; right: 25px; color: #fff; font-size: 35px; cursor: pointer; }
@@ -322,7 +308,7 @@
     <div class="book-wrapper">
         <div id="demoBook">
 
-            <!-- ================= SAMPUL DEPAN ================= -->
+            <!-- SAMPUL DEPAN -->
             <div class="page --cover" data-density="hard">
                 <div class="cover-border">
                     <h1>KATALOG BURUNG</h1>
@@ -333,7 +319,7 @@
                 </div>
             </div>
 
-            <!-- ================= SPESIES 1: VISUAL (HALAMAN 1) ================= -->
+            <!-- SPESIES 1: VISUAL (HALAMAN 1) -->
             <div class="page">
                 <div class="page-content">
                     <div>
@@ -343,16 +329,14 @@
                         </div>
                         <h3 style="margin: 2px 0 10px 0; font-size: 1.1em; color: var(--primary-color);">Pteruthius aenobarbus</h3>
                         
-                        <!-- Pemutar Video Landscape (16:9) -->
                         <video controls playsinline preload="metadata" class="page-video video-landscape">
                             <source src="video/burung1.mp4" type="video/mp4">
                             Browser kamu tidak mendukung pemutar video ini.
                         </video>
                         <div style="font-size: 0.72em; color: var(--text-muted); text-align: right; margin-top: -6px; margin-bottom: 10px;">
-                            📹 Dokumentasi: Tim Peneliti Internal (2025)
+                            📹 Dokumentasi: Tim Peneliti Internal
                         </div>
 
-                        <!-- Map Box -->
                         <div class="map-box">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1183.1106818863855!2d111.18750931758943!3d-7.659767903179551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e798bc6289c5131%3A0xe18dc680d751e6bf!2sPertapaan%20Joglo!5e1!3m2!1sid!2sid!4v1784895107308!5m2!1sid!2sid" allowfullscreen="" loading="lazy"></iframe>
                         </div>
@@ -361,11 +345,10 @@
                 </div>
             </div>
 
-            <!-- ================= SPESIES 1: DESKRIPSI LENGKAP (HALAMAN 2) ================= -->
+            <!-- SPESIES 1: DESKRIPSI LENGKAP (HALAMAN 2) -->
             <div class="page">
                 <div class="page-content">
                     <div>
-                        <!-- Header Status & Judul -->
                         <div class="badge-container">
                             <span class="badge-iucn">IUCN: Least Concern</span>
                             <span class="badge-tag">Insektivora</span>
@@ -373,7 +356,6 @@
                         <h2 class="species-title">Pteruthius aenobarbus</h2>
                         <div class="local-name">Nama Lokal: <strong>Ciu Kuning</strong> (Trilling Shrike-babbler)</div>
                         
-                        <!-- Grid Informasi Lapangan -->
                         <div class="meta-grid">
                             <div class="meta-item">
                                 <strong>Elevasi Range</strong>
@@ -393,12 +375,10 @@
                             </div>
                         </div>
 
-                        <!-- Deskripsi Spesies -->
                         <p class="desc-text">
-                            Burung berukuran kecil yang sangat aktif bergerak di tajuk pohon bagian tengah hingga atas (*canopy level*). Memiliki karakteristik suara siulan yang khas berirama cepat.
+                            Burung berukuran kecil yang sangat aktif bergerak di tajuk pohon bagian tengah hingga atas. Memiliki karakteristik suara siulan yang khas berirama cepat.
                         </p>
 
-                        <!-- Kartu Taksonomi (Mengisi Ruang Kosong) -->
                         <div class="info-card">
                             <div class="info-card-title">📌 Taksonomi Ringkas</div>
                             <div class="taxo-list">
@@ -409,7 +389,6 @@
                             </div>
                         </div>
 
-                        <!-- Kartu Ciri Morfologi (Mengisi Ruang Kosong) -->
                         <div class="info-card">
                             <div class="info-card-title">🔍 Ciri Diagnostik</div>
                             <div style="font-size: 0.78em; color: #4b5563; line-height: 1.4;">
@@ -417,11 +396,10 @@
                             </div>
                         </div>
 
-                        <!-- Media Tambahan -->
                         <div style="margin-top: 10px;">
                             <strong style="font-size: 0.78em; color: var(--primary-color);">📷 Foto Referensi (Klik untuk Zoom):</strong>
                             <div class="gallery-container">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg" onclick="bukaFoto(this.src)" onerror="this.src='https://via.placeholder.com/70x70?text=Foto'">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg" class="btn-zoom-foto" data-src="https://upload.wikimedia.org/wikipedia/commons/d/db/White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg">
                             </div>
                         </div>
 
@@ -436,7 +414,7 @@
                 </div>
             </div>
 
-            <!-- ================= SAMPUL BELAKANG ================= -->
+            <!-- SAMPUL BELAKANG -->
             <div class="page --cover" data-density="hard">
                 <div class="cover-border">
                     <h2>TERIMA KASIH</h2>
@@ -455,7 +433,7 @@
     </div>
 
     <!-- MODAL FOTO ZOOM -->
-    <div id="modalFoto" class="modal" onclick="tutupFotoLuar(event)">
+    <div id="modalFoto" class="modal">
         <span class="close-modal" onclick="tutupFoto()">&times;</span>
         <div class="modal-content-wrapper">
             <img id="gambarMembesar" src="" onclick="toggleZoom(event)">
@@ -463,83 +441,101 @@
         <div class="modal-hint">💡 Klik foto untuk perbesar detail | Klik luar untuk tutup</div>
     </div>
 
-<script>
-    // Inisialisasi Engine Flipbook 3D
-    const pageFlip = new St.PageFlip(document.getElementById('demoBook'), {
-        width: 450,
-        height: 600,
-        size: "stretch",
-        minWidth: 300,
-        maxWidth: 550,
-        minHeight: 450,
-        maxHeight: 750,
-        maxShadowOpacity: 0.5,
-        showCover: true,
-        mobileScrollSupport: false
-    });
+    <script>
+        // Inisialisasi Engine Flipbook 3D
+        const pageFlip = new St.PageFlip(document.getElementById('demoBook'), {
+            width: 450,
+            height: 600,
+            size: "stretch",
+            minWidth: 300,
+            maxWidth: 550,
+            minHeight: 450,
+            maxHeight: 750,
+            maxShadowOpacity: 0.5,
+            showCover: true,
+            mobileScrollSupport: false
+        });
 
-    // Load halaman ke engine
-    pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+        // Load halaman ke engine
+        pageFlip.loadFromHTML(document.querySelectorAll('.page'));
 
-    // Indikator halaman
-    pageFlip.on('flip', (e) => {
-        document.getElementById('page-num').innerText = `Hal ${e.data + 1} / ${pageFlip.getPageCount()}`;
-    });
+        // Indikator halaman
+        pageFlip.on('flip', (e) => {
+            document.getElementById('page-num').innerText = `Hal ${e.data + 1} / ${pageFlip.getPageCount()}`;
+        });
 
-    // Navigasi Keyboard Tangguh
-    window.addEventListener('keydown', (e) => {
-        if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+        // NAVIGASI KEYBOARD TANGGUH
+        window.addEventListener('keydown', (e) => {
+            if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+            if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+                pageFlip.flipNext();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                pageFlip.flipPrev();
+            }
+        });
 
-        if (e.key === 'ArrowRight' || e.key === 'PageDown') {
-            pageFlip.flipNext();
-        } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-            pageFlip.flipPrev();
-        }
-    });
+        // ================= KUNCI PERBAIKAN FOTO & ELEMEN INTERAKTIF =================
+        // Bloking event pointerdown/mousedown/touchstart agar PageFlip mengabaikan klik pada media
+        const interactiveElements = document.querySelectorAll('.gallery-container img, video, audio, iframe, .modal');
+        interactiveElements.forEach(el => {
+            ['pointerdown', 'mousedown', 'touchstart'].forEach(eventType => {
+                el.addEventListener(eventType, (e) => {
+                    e.stopPropagation();
+                });
+            });
+        });
 
-    // Modal Zoom Foto (Sudah Diperbaiki Anti-Flip)
-    let isZoomed = false;
+        // Event Handler Khusus Klik Foto Zoom
+        document.querySelectorAll('.btn-zoom-foto').forEach(img => {
+            img.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                const src = img.getAttribute('data-src');
+                bukaFoto(src);
+            });
+        });
 
-    function bukaFoto(event, src) {
-        if (event) event.stopPropagation(); // Stop rambatan klik agar buku tidak nge-flip
-        
-        const img = document.getElementById('gambarMembesar');
-        img.src = src;
-        img.classList.remove('is-zoomed');
-        img.style.transformOrigin = 'center center';
-        isZoomed = false;
-        document.getElementById('modalFoto').style.display = 'flex';
-    }
+        let isZoomed = false;
 
-    function toggleZoom(event) {
-        if (event) event.stopPropagation();
-        const img = document.getElementById('gambarMembesar');
-
-        if (!isZoomed) {
-            const rect = img.getBoundingClientRect();
-            const x = ((event.clientX - rect.left) / rect.width) * 100;
-            const y = ((event.clientY - rect.top) / rect.height) * 100;
-
-            img.style.transformOrigin = `${x}% ${y}%`;
-            img.classList.add('is-zoomed');
-            isZoomed = true;
-        } else {
+        function bukaFoto(src) {
+            const modal = document.getElementById('modalFoto');
+            const img = document.getElementById('gambarMembesar');
+            img.src = src;
             img.classList.remove('is-zoomed');
             img.style.transformOrigin = 'center center';
             isZoomed = false;
+            modal.style.display = 'flex';
         }
-    }
 
-    function tutupFotoLuar(event) {
-        if (event.target.id === 'modalFoto') tutupFoto();
-    }
+        function toggleZoom(e) {
+            if (e) e.stopPropagation();
+            const img = document.getElementById('gambarMembesar');
 
-    function tutupFoto() {
-        const img = document.getElementById('gambarMembesar');
-        img.classList.remove('is-zoomed');
-        isZoomed = false;
-        document.getElementById('modalFoto').style.display = 'none';
-    }
-</script>
+            if (!isZoomed) {
+                const rect = img.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+                img.style.transformOrigin = `${x}% ${y}%`;
+                img.classList.add('is-zoomed');
+                isZoomed = true;
+            } else {
+                img.classList.remove('is-zoomed');
+                img.style.transformOrigin = 'center center';
+                isZoomed = false;
+            }
+        }
+
+        document.getElementById('modalFoto').addEventListener('click', (e) => {
+            if (e.target.id === 'modalFoto') tutupFoto();
+        });
+
+        function tutupFoto() {
+            const img = document.getElementById('gambarMembesar');
+            img.classList.remove('is-zoomed');
+            isZoomed = false;
+            document.getElementById('modalFoto').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
