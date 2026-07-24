@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katalog Burung Gunung Lawu</title>
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+    <style>
+        :root {
+            --primary-color: #2b580c; 
+            --bg-color: #eef2ec;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .swiper {
+            width: 92%;
+            max-width: 1000px;
+            height: 90vh;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            position: relative;
+            overflow: hidden !important;
+            padding: 0 !important;
+        }
+
+        .swiper-slide {
+            width: 100% !important;
+            height: 100% !important;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        /* --- TAMPILAN DESKTOP --- */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 55% 45%; 
+            gap: 12px;
+            height: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .video-box, .desc-box, .map-box {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .video-box { grid-column: 1; grid-row: 1; background: #000; }
+        .video-box iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+        .desc-box {
+            grid-column: 2; grid-row: 1;
+            background: #f9fbf8;
+            padding: 15px;
+            border-left: 5px solid var(--primary-color);
+            overflow-y: auto; 
+        }
+
+        .desc-box h2 { margin-top: 0; color: var(--primary-color); font-style: italic; font-size: 1.3em; }
+
+        .metadata {
+            background-color: #e8f5e9;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            margin: 8px 0;
+        }
+        .metadata p { margin: 2px 0; }
+
+        .gallery-container { display: flex; gap: 8px; margin: 8px 0; }
+        .gallery-container img {
+            width: 65px; height: 65px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: zoom-in;
+            background-color: #e0e0e0;
+            border: 1px solid #ccc;
+        }
+
+        .audio-player { width: 100%; margin-top: 5px; }
+
+        .map-box { grid-column: 1 / span 2; grid-row: 2; }
+        .map-box iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+        .modal {
+            display: none; position: fixed; z-index: 2000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            justify-content: center; align-items: center;
+            cursor: zoom-out;
+        }
+        .modal img { max-width: 90%; max-height: 90%; border-radius: 8px; }
+
+        /* --- KHUSUS TAMPILAN HP (IPHONE & ANDROID) --- */
+        @media (max-width: 768px) {
+            .grid-layout {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                overflow-y: auto;
+                padding: 15px;
+                box-sizing: border-box;
+            }
+
+            .video-box {
+                width: 100%;
+                height: 200px;
+                min-height: 200px;
+                flex-shrink: 0;
+            }
+
+            .desc-box {
+                width: 100%;
+                flex-shrink: 0;
+                margin-top: 12px;
+                box-sizing: border-box;
+            }
+
+            .map-box {
+                width: 100%;
+                height: 220px; 
+                min-height: 220px;
+                flex-shrink: 0;
+                margin-top: 12px;
+                margin-bottom: 35px;
+                background-color: #e5e3df;
+            }
+
+            .map-box iframe {
+                width: 100%;
+                height: 100%;
+                min-height: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="swiper">
+        <div class="swiper-wrapper">
+
+            <!-- ================= HALAMAN 1 (BURUNG PERTAMA) ================= -->
+            <div class="swiper-slide">
+                <div class="grid-layout">
+                    
+                    <div class="video-box">
+                        <iframe class="swiper-no-swiping" src="https://drive.google.com/file/d/1M4whImv3XjJ-ptLIlhodteIo7PLNWW58/preview"></iframe>
+                    </div>
+
+                    <div class="desc-box">
+                        <h2>Pteruthius aenobarbus</h2>
+                        <p style="margin:0; font-size: 0.9em;"><strong>Nama Lokal:</strong> Ciu Kuning</p>
+                        
+                        <div class="metadata">
+                            <p><strong>Elevasi:</strong> 2.400 mdpl</p>
+                            <p><strong>Habitat:</strong> Hutan kaliandra</p>
+                            <p><strong>Waktu:</strong> Pagi hari (10.30 WIB)</p>
+                        </div>
+
+                        <p style="font-size: 0.85em; line-height: 1.4;">Burung spesifik dataran tinggi yang aktif bergerak di tajuk pohon kawasan pegunungan Gunung Lawu.</p>
+                        
+                        <strong style="font-size: 0.8em;">Foto Referensi:</strong>
+                        <div class="gallery-container">
+                            <!-- Foto 1: Link alternatif Wikimedia tanpa proteksi header -->
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg" 
+                                 alt="Pteruthius aenobarbus 1" 
+                                 onclick="bukaFoto(this.src)">
+                            
+                            <!-- Foto 2 -->
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Pteruthius_flaviscapis.jpg" 
+                                 alt="Pteruthius aenobarbus 2" 
+                                 onclick="bukaFoto(this.src)">
+                        </div>
+                        <small style="display:block; font-size:0.75em; color:gray; margin-bottom:10px;">
+                            *Sumber: <a href="https://commons.wikimedia.org/wiki/File:White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg" target="_blank" style="color:gray;">Shiv's fotografia (CC BY-SA 4.0)</a>
+                        </small>
+
+                        <strong style="font-size: 0.8em;">Suara Burung:</strong>
+                        <audio controls class="audio-player">
+                            <source src="audio-burung-ciu.mp3" type="audio/mpeg">
+                        </audio>
+                    </div>
+
+                    <!-- Peta Google Maps -->
+                    <div class="map-box">
+                        <iframe class="swiper-no-swiping" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1183.1106818863855!2d111.18750931758943!3d-7.659767903179551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e798bc6289c5131%3A0xe18dc680d751e6bf!2sPertapaan%20Joglo!5e1!3m2!1sid!2sid!4v1784895107308!5m2!1sid!2sid" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+
+                </div>
+            </div>
+            <!-- ================= AKHIR HALAMAN 1 ================= -->
+
+            <!-- ================= HALAMAN 2 (BURUNG KEDUA) ================= -->
+            <div class="swiper-slide">
+                <div class="grid-layout">
+                    
+                    <div class="video-box" style="display:flex; justify-content:center; align-items:center; color:white;">
+                        <p>Video Burung Kedua Di Sini</p>
+                    </div>
+
+                    <div class="desc-box">
+                        <h2>Burung Spesies 2</h2>
+                        <p>Geser / Swipe ke kanan untuk kembali ke Slide 1.</p>
+                    </div>
+
+                    <div class="map-box" style="display:flex; justify-content:center; align-items:center; background:#ddd;">
+                        <p>Peta Lokasi 2 Di Sini</p>
+                    </div>
+
+                </div>
+            </div>
+            <!-- ================= AKHIR HALAMAN 2 ================= -->
+
+        </div>
+        
+        <!-- Navigasi Slider -->
+        <div class="swiper-button-next" style="color: var(--primary-color);"></div>
+        <div class="swiper-button-prev" style="color: var(--primary-color);"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- MODAL FOTO MEMBESAR -->
+    <div id="modalFoto" class="modal" onclick="tutupFoto()">
+        <img id="gambarMembesar" src="">
+    </div>
+
+    <!-- SCRIPT SWIPER -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+    <script>
+        const swiper = new Swiper('.swiper', {
+            slidesPerView: 1,
+            spaceBetween: 0,
+            loop: false,
+            
+            noSwiping: true,
+            noSwipingClass: 'swiper-no-swiping',
+            
+            keyboard: {
+                enabled: true,
+            },
+            
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+
+        function bukaFoto(src) {
+            document.getElementById('gambarMembesar').src = src;
+            document.getElementById('modalFoto').style.display = 'flex';
+        }
+
+        function tutupFoto() {
+            document.getElementById('modalFoto').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
