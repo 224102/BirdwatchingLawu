@@ -306,7 +306,7 @@
     <div class="book-wrapper">
         <div id="demoBook">
 
-            <!-- SAMPUL DEPAN (Sudah Dihapus data-density="hard" agar Animasi Melengkung Halus) -->
+            <!-- SAMPUL DEPAN -->
             <div class="page --cover">
                 <div class="cover-border">
                     <h1>KATALOG BURUNG</h1>
@@ -390,7 +390,7 @@
                         <div style="margin-top: 6px;">
                             <strong style="font-size: 0.72em; color: var(--primary-color);">📷 Foto Referensi (Klik Zoom):</strong>
                             <div class="gallery-container">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg" class="btn-zoom-foto" data-src="https://upload.wikimedia.org/wikipedia/commons/d/db/White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg" class="btn-zoom-foto" data-src="https://upload.wikimedia.org/wikipedia/commons/d/db/White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg" alt="Ciu Gunung">
                             </div>
                         </div>
 
@@ -405,7 +405,7 @@
                 </div>
             </div>
 
-            <!-- SAMPUL BELAKANG (Sudah Dihapus data-density="hard") -->
+            <!-- SAMPUL BELAKANG -->
             <div class="page --cover">
                 <div class="cover-border">
                     <h2>TERIMA KASIH</h2>
@@ -427,7 +427,7 @@
     <div id="modalFoto" class="modal">
         <span class="close-modal" onclick="tutupFoto()">&times;</span>
         <div class="modal-content-wrapper">
-            <img id="gambarMembesar" src="" onclick="toggleZoom(event)">
+            <img id="gambarMembesar" src="" alt="Zoom Foto" onclick="toggleZoom(event)">
         </div>
         <div class="modal-hint">💡 Klik foto untuk perbesar | Klik luar untuk tutup</div>
     </div>
@@ -452,23 +452,29 @@
         // Load halaman ke engine
         pageFlip.loadFromHTML(document.querySelectorAll('.page'));
 
-        // Indikator halaman
+        // Indikator halaman + Otomatis hentikan video/audio saat halaman berpindah
         pageFlip.on('flip', (e) => {
             document.getElementById('page-num').innerText = `Hal ${e.data + 1} / ${pageFlip.getPageCount()}`;
+            
+            // Hentikan pemutaran video/audio jika ada yang berbunyi
+            document.querySelectorAll('video, audio').forEach(media => media.pause());
         });
 
-        // NAVIGASI KEYBOARD TANGGUH
+        // NAVIGASI KEYBOARD
         window.addEventListener('keydown', (e) => {
             if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
             if (e.key === 'ArrowRight' || e.key === 'PageDown') {
                 pageFlip.flipNext();
             } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
                 pageFlip.flipPrev();
+            } else if (e.key === 'Escape') {
+                tutupFoto();
             }
         });
 
-        // PENGAMAN TOUCH & KLIK UNTUK ELEMEN INTERAKTIF
-        const interactiveElements = document.querySelectorAll('.gallery-container img, video, audio, iframe, .modal, .page-content');
+        // PENGAMAN TOUCH & KLIK KHUSUS UNTUK WIDGET INTERAKTIF
+        // (Catatan: .page-content sengaja tidak dimasukkan agar drag/swipe membalik halaman berjalan lancar)
+        const interactiveElements = document.querySelectorAll('.gallery-container img, video, audio, iframe, .modal, .controls');
         interactiveElements.forEach(el => {
             ['pointerdown', 'mousedown', 'touchstart'].forEach(eventType => {
                 el.addEventListener(eventType, (e) => {
