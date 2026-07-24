@@ -463,82 +463,83 @@
         <div class="modal-hint">💡 Klik foto untuk perbesar detail | Klik luar untuk tutup</div>
     </div>
 
-    <script>
-        // Inisialisasi Engine Flipbook 3D
-        const pageFlip = new St.PageFlip(document.getElementById('demoBook'), {
-            width: 450,
-            height: 600,
-            size: "stretch",
-            minWidth: 300,
-            maxWidth: 550,
-            minHeight: 450,
-            maxHeight: 750,
-            maxShadowOpacity: 0.5,
-            showCover: true,
-            mobileScrollSupport: false
-        });
+<script>
+    // Inisialisasi Engine Flipbook 3D
+    const pageFlip = new St.PageFlip(document.getElementById('demoBook'), {
+        width: 450,
+        height: 600,
+        size: "stretch",
+        minWidth: 300,
+        maxWidth: 550,
+        minHeight: 450,
+        maxHeight: 750,
+        maxShadowOpacity: 0.5,
+        showCover: true,
+        mobileScrollSupport: false
+    });
 
-        // Load halaman ke engine
-        pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+    // Load halaman ke engine
+    pageFlip.loadFromHTML(document.querySelectorAll('.page'));
 
-        // Indikator halaman
-        pageFlip.on('flip', (e) => {
-            document.getElementById('page-num').innerText = `Hal ${e.data + 1} / ${pageFlip.getPageCount()}`;
-        });
+    // Indikator halaman
+    pageFlip.on('flip', (e) => {
+        document.getElementById('page-num').innerText = `Hal ${e.data + 1} / ${pageFlip.getPageCount()}`;
+    });
 
-        // PERBAIKAN NAVIGASI KEYBOARD TANGGUH (Diikat pada window utama)
-        window.addEventListener('keydown', (e) => {
-            // Abaikan jika user sedang mengetik di input box (jika ada)
-            if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+    // Navigasi Keyboard Tangguh
+    window.addEventListener('keydown', (e) => {
+        if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
 
-            if (e.key === 'ArrowRight' || e.key === 'PageDown') {
-                pageFlip.flipNext();
-            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-                pageFlip.flipPrev();
-            }
-        });
+        if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+            pageFlip.flipNext();
+        } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+            pageFlip.flipPrev();
+        }
+    });
 
-        // Modal Zoom Foto
-        let isZoomed = false;
+    // Modal Zoom Foto (Sudah Diperbaiki Anti-Flip)
+    let isZoomed = false;
 
-        function bukaFoto(src) {
-            const img = document.getElementById('gambarMembesar');
-            img.src = src;
+    function bukaFoto(event, src) {
+        if (event) event.stopPropagation(); // Stop rambatan klik agar buku tidak nge-flip
+        
+        const img = document.getElementById('gambarMembesar');
+        img.src = src;
+        img.classList.remove('is-zoomed');
+        img.style.transformOrigin = 'center center';
+        isZoomed = false;
+        document.getElementById('modalFoto').style.display = 'flex';
+    }
+
+    function toggleZoom(event) {
+        if (event) event.stopPropagation();
+        const img = document.getElementById('gambarMembesar');
+
+        if (!isZoomed) {
+            const rect = img.getBoundingClientRect();
+            const x = ((event.clientX - rect.left) / rect.width) * 100;
+            const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+            img.style.transformOrigin = `${x}% ${y}%`;
+            img.classList.add('is-zoomed');
+            isZoomed = true;
+        } else {
             img.classList.remove('is-zoomed');
             img.style.transformOrigin = 'center center';
             isZoomed = false;
-            document.getElementById('modalFoto').style.display = 'flex';
         }
+    }
 
-        function toggleZoom(event) {
-            event.stopPropagation();
-            const img = document.getElementById('gambarMembesar');
+    function tutupFotoLuar(event) {
+        if (event.target.id === 'modalFoto') tutupFoto();
+    }
 
-            if (!isZoomed) {
-                const rect = img.getBoundingClientRect();
-                const x = ((event.clientX - rect.left) / rect.width) * 100;
-                const y = ((event.clientY - rect.top) / rect.height) * 100;
-
-                img.style.transformOrigin = `${x}% ${y}%`;
-                img.classList.add('is-zoomed');
-                isZoomed = true;
-            } else {
-                img.classList.remove('is-zoomed');
-                img.style.transformOrigin = 'center center';
-                isZoomed = false;
-            }
-        }
-
-        function tutupFotoLuar(event) {
-            if (event.target.id === 'modalFoto') tutupFoto();
-        }
-
-        function tutupFoto() {
-            const img = document.getElementById('gambarMembesar');
-            img.classList.remove('is-zoomed');
-            isZoomed = false;
-            document.getElementById('modalFoto').style.display = 'none';
-        }
-    </script>
+    function tutupFoto() {
+        const img = document.getElementById('gambarMembesar');
+        img.classList.remove('is-zoomed');
+        isZoomed = false;
+        document.getElementById('modalFoto').style.display = 'none';
+    }
+</script>
 </body>
 </html>
