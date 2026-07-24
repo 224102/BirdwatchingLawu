@@ -11,14 +11,18 @@
     <style>
         :root {
             --primary-color: #2b580c; 
+            --primary-light: #eef5eb;
+            --accent-color: #d97706;
             --bg-color: #dbe4d8;
-            --page-bg: #fdfdfd;
+            --page-bg: #ffffff;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
         }
 
         * { box-sizing: border-box; }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background-color: var(--bg-color);
             margin: 0;
             padding: 0;
@@ -28,6 +32,7 @@
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden;
+            color: var(--text-dark);
         }
 
         /* CONTAINER UTAMA BUKU */
@@ -42,19 +47,19 @@
         }
 
         #demoBook {
-            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
             background-color: transparent;
         }
 
         /* STYLING TIAP HALAMAN BUKU */
         .page {
             background-color: var(--page-bg);
-            border: 1px solid #e2e2e2;
+            border: 1px solid #e5e7eb;
             overflow: hidden;
         }
 
         .page-content {
-            padding: 25px;
+            padding: 22px;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -62,7 +67,7 @@
             overflow-y: auto;
         }
 
-        /* HARD COVER (SAMPUL DEPAN & BELAKANG) */
+        /* HARD COVER */
         .page.--cover {
             background: linear-gradient(135deg, #2b580c 0%, #173504 100%);
             color: #ffffff;
@@ -99,25 +104,23 @@
             align-items: center;
         }
 
-        /* ================= PERBAIKAN DUA TIPE VIDEO ================= */
+        /* VIDEO STYLING */
         .page-video {
             border-radius: 8px;
             background: #000000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            margin-bottom: 10px;
             display: block;
         }
 
-        /* TIPE 1: LANDSCAPE (16:9) */
         .video-landscape {
             width: 100%;
             aspect-ratio: 16 / 9;
             object-fit: contain;
         }
 
-        /* TIPE 2: PORTRAIT / VERTIKAL (9:16) */
         .video-portrait {
-            height: 270px;
+            height: 260px;
             max-width: 100%;
             aspect-ratio: 9 / 16;
             margin-left: auto;
@@ -125,57 +128,160 @@
             object-fit: contain;
         }
 
-        /* TIPIFIKASI KONTEN */
-        h2 { margin-top: 0; color: var(--primary-color); font-style: italic; font-size: 1.3em; }
-
-        .metadata {
-            background-color: #eef5eb;
-            padding: 10px 12px;
-            border-radius: 6px;
-            font-size: 0.85em;
-            margin: 10px 0;
+        /* BADGES & TAGS */
+        .badge-container {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
         }
-        .metadata p { margin: 3px 0; }
 
-        .gallery-container { display: flex; gap: 8px; margin: 8px 0; }
+        .badge-iucn {
+            background-color: #10b981;
+            color: white;
+            font-size: 0.7em;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-tag {
+            background-color: #f3f4f6;
+            color: #4b5563;
+            font-size: 0.7em;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        /* HEADINGS & TEXT */
+        h2.species-title {
+            margin: 2px 0;
+            color: var(--primary-color);
+            font-style: italic;
+            font-size: 1.35em;
+            font-weight: 700;
+        }
+
+        .local-name {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        /* GRID METADATA */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            background-color: var(--primary-light);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 12px;
+        }
+
+        .meta-item {
+            font-size: 0.8em;
+            line-height: 1.3;
+        }
+
+        .meta-item strong {
+            display: block;
+            color: var(--primary-color);
+            font-size: 0.85em;
+        }
+
+        /* KOTAK TAKSONOMI & INFO SEKUNDER */
+        .info-card {
+            background: #fafafa;
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+        }
+
+        .info-card-title {
+            font-size: 0.8em;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .taxo-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4px 10px;
+            font-size: 0.78em;
+            color: #4b5563;
+        }
+
+        .desc-text {
+            font-size: 0.82em;
+            line-height: 1.5;
+            color: #374151;
+            margin: 8px 0;
+        }
+
+        /* GALLERY & AUDIO */
+        .gallery-container { display: flex; gap: 8px; margin-top: 5px; }
         .gallery-container img {
-            width: 65px; height: 65px;
+            width: 55px; height: 55px;
             object-fit: cover;
             border-radius: 6px;
             cursor: pointer;
-            border: 1px solid #ccc;
-            transition: transform 0.2s;
+            border: 1px solid #d1d5db;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .gallery-container img:hover { transform: scale(1.05); }
+        .gallery-container img:hover { 
+            transform: scale(1.05);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
 
-        .audio-player { width: 100%; margin-top: 5px; outline: none; }
+        .audio-player { 
+            width: 100%; 
+            height: 36px;
+            margin-top: 6px; 
+            outline: none; 
+            border-radius: 20px;
+        }
 
         .map-box {
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            height: 180px;
+            height: 170px;
+            border: 1px solid #e5e7eb;
         }
         .map-box iframe { width: 100%; height: 100%; border: 0; }
 
-        /* NOMOR HALAMAN BUKU */
+        /* FOOTER HALAMAN */
         .page-footer {
-            font-size: 0.8em;
-            color: #888;
+            font-size: 0.75em;
+            color: var(--text-muted);
             text-align: center;
-            padding-top: 10px;
-            border-top: 1px dashed #ddd;
-            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px dashed #e5e7eb;
+            margin-top: 8px;
         }
 
-        /* TOMBOL KONTROL BAWAH */
+        /* CONTROLS */
         .controls {
             display: flex;
             align-items: center;
             gap: 15px;
             margin-top: 15px;
             background: #ffffff;
-            padding: 10px 20px;
+            padding: 8px 20px;
             border-radius: 30px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
@@ -184,7 +290,7 @@
             background: var(--primary-color);
             color: white;
             border: none;
-            padding: 8px 16px;
+            padding: 8px 18px;
             border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
@@ -207,7 +313,7 @@
 
         @media (max-width: 768px) {
             .page-content { padding: 15px; }
-            .map-box { height: 150px; }
+            .map-box { height: 140px; }
         }
     </style>
 </head>
@@ -222,24 +328,29 @@
                     <h1>KATALOG BURUNG</h1>
                     <p>Kawasan Gunung Lawu</p>
                     <div style="margin-top: 40px; font-size: 0.8em; opacity: 0.7;">
-                        📖 Tarik ujung kertas / gunakan kursor panah untuk membuka buku
+                        📖 Gunakan panah keyboard (&larr; &rarr;) atau tarik kertas untuk membaca
                     </div>
                 </div>
             </div>
 
-            <!-- ================= SPESIES 1: VIDEO 16:9 (LANDSCAPE) ================= -->
+            <!-- ================= SPESIES 1: VISUAL (HALAMAN 1) ================= -->
             <div class="page">
                 <div class="page-content">
                     <div>
-                        <span style="font-size:0.75em; color:var(--primary-color); font-weight:bold;">DOKUMENTASI VISUAL (16:9)</span>
-                        <h3 style="margin: 5px 0 10px 0; font-size: 1.1em;">Pteruthius aenobarbus</h3>
+                        <div class="badge-container">
+                            <span class="badge-tag">Dokumentasi Lapangan</span>
+                            <span class="badge-tag">Sektor Selatan</span>
+                        </div>
+                        <h3 style="margin: 2px 0 10px 0; font-size: 1.1em; color: var(--primary-color);">Pteruthius aenobarbus</h3>
                         
-                        <!-- PAKAI CLASS 'video-landscape' UNTUK FORMAT 16:9 -->
+                        <!-- Pemutar Video Landscape (16:9) -->
                         <video controls playsinline preload="metadata" class="page-video video-landscape">
                             <source src="video/burung1.mp4" type="video/mp4">
                             Browser kamu tidak mendukung pemutar video ini.
                         </video>
-                        <div style="font-size: 0.75em; color: #666; text-align: right; margin-top: -8px; margin-bottom: 10px;">Sumber: Tim Peneliti Internal</div>
+                        <div style="font-size: 0.72em; color: var(--text-muted); text-align: right; margin-top: -6px; margin-bottom: 10px;">
+                            📹 Dokumentasi: Tim Peneliti Internal (2025)
+                        </div>
 
                         <!-- Map Box -->
                         <div class="map-box">
@@ -250,77 +361,78 @@
                 </div>
             </div>
 
-            <!-- ================= SPESIES 1: DESKRIPSI ================= -->
+            <!-- ================= SPESIES 1: DESKRIPSI LENGKAP (HALAMAN 2) ================= -->
             <div class="page">
                 <div class="page-content">
                     <div>
-                        <h2>Pteruthius aenobarbus</h2>
-                        <p style="margin:0; font-size: 0.9em;"><strong>Nama Lokal:</strong> Ciu Kuning</p>
+                        <!-- Header Status & Judul -->
+                        <div class="badge-container">
+                            <span class="badge-iucn">IUCN: Least Concern</span>
+                            <span class="badge-tag">Insektivora</span>
+                        </div>
+                        <h2 class="species-title">Pteruthius aenobarbus</h2>
+                        <div class="local-name">Nama Lokal: <strong>Ciu Kuning</strong> (Trilling Shrike-babbler)</div>
                         
-                        <div class="metadata">
-                            <p><strong>Elevasi:</strong> 2.400 mdpl</p>
-                            <p><strong>Habitat:</strong> Hutan kaliandra</p>
-                            <p><strong>Waktu Observasi:</strong> Pagi hari (10.30 WIB)</p>
+                        <!-- Grid Informasi Lapangan -->
+                        <div class="meta-grid">
+                            <div class="meta-item">
+                                <strong>Elevasi Range</strong>
+                                1.500 – 2.400 mdpl
+                            </div>
+                            <div class="meta-item">
+                                <strong>Tipe Habitat</strong>
+                                Hutan Kaliandra & Primar
+                            </div>
+                            <div class="meta-item">
+                                <strong>Waktu Observasi</strong>
+                                Pagi hari (10.30 WIB)
+                            </div>
+                            <div class="meta-item">
+                                <strong>Ukuran Tubuh</strong>
+                                ± 11.5 cm
+                            </div>
                         </div>
 
-                        <p style="font-size: 0.85em; line-height: 1.5; color: #444;">
-                            Burung spesifik dataran tinggi yang aktif bergerak di tajuk pohon kawasan pegunungan Gunung Lawu. Memiliki suara khas dan warna bulu mencolok.
+                        <!-- Deskripsi Spesies -->
+                        <p class="desc-text">
+                            Burung berukuran kecil yang sangat aktif bergerak di tajuk pohon bagian tengah hingga atas (*canopy level*). Memiliki karakteristik suara siulan yang khas berirama cepat.
                         </p>
-                        
-                        <strong style="font-size: 0.8em; display:block; margin-top:10px;">Foto Referensi (Klik Zoom):</strong>
-                        <div class="gallery-container">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg" onclick="bukaFoto(this.src)" onerror="this.src='https://via.placeholder.com/70x70?text=Broken'">
+
+                        <!-- Kartu Taksonomi (Mengisi Ruang Kosong) -->
+                        <div class="info-card">
+                            <div class="info-card-title">📌 Taksonomi Ringkas</div>
+                            <div class="taxo-list">
+                                <div><strong>Kelas:</strong> Aves</div>
+                                <div><strong>Ordo:</strong> Passeriformes</div>
+                                <div><strong>Famili:</strong> Vireonidae</div>
+                                <div><strong>Genus:</strong> <em>Pteruthius</em></div>
+                            </div>
                         </div>
 
-                        <strong style="font-size: 0.8em; display:block; margin-top:10px;">Audio Rekaman Suara:</strong>
-                        <audio controls class="audio-player">
-                            <source src="audio-burung-ciu.mp3" type="audio/mpeg">
-                        </audio>
+                        <!-- Kartu Ciri Morfologi (Mengisi Ruang Kosong) -->
+                        <div class="info-card">
+                            <div class="info-card-title">🔍 Ciri Diagnostik</div>
+                            <div style="font-size: 0.78em; color: #4b5563; line-height: 1.4;">
+                                Dahi berwarna kastanye (cokelat kemerahan), alis putih jelas di atas mata gelap. Tubuh bagian bawah kuning keemasan terang.
+                            </div>
+                        </div>
+
+                        <!-- Media Tambahan -->
+                        <div style="margin-top: 10px;">
+                            <strong style="font-size: 0.78em; color: var(--primary-color);">📷 Foto Referensi (Klik untuk Zoom):</strong>
+                            <div class="gallery-container">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg" onclick="bukaFoto(this.src)" onerror="this.src='https://via.placeholder.com/70x70?text=Foto'">
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 8px;">
+                            <strong style="font-size: 0.78em; color: var(--primary-color);">🎵 Bioakustik / Suara Panggilan:</strong>
+                            <audio controls class="audio-player">
+                                <source src="audio-burung-ciu.mp3" type="audio/mpeg">
+                            </audio>
+                        </div>
                     </div>
                     <div class="page-footer">Halaman 2</div>
-                </div>
-            </div>
-
-            <!-- ================= SPESIES 2: VIDEO 9:16 (PORTRAIT) ================= -->
-            <div class="page">
-                <div class="page-content">
-                    <div>
-                        <span style="font-size:0.75em; color:var(--primary-color); font-weight:bold;">DOKUMENTASI VISUAL (9:16)</span>
-                        <h3 style="margin: 5px 0 10px 0; font-size: 1.1em;">Spesies Burung Kedua</h3>
-                        
-                        <!-- PAKAI CLASS 'video-portrait' UNTUK FORMAT 9:16 / REELS -->
-                        <video controls playsinline preload="metadata" class="page-video video-portrait">
-                            <source src="video/burung2.mp4" type="video/mp4">
-                            Browser kamu tidak mendukung pemutar video ini.
-                        </video>
-                        <div style="font-size: 0.75em; color: #666; text-align: center; margin-top: -8px; margin-bottom: 10px;">Sumber: Dokumentasi Lapangan II</div>
-
-                        <div class="map-box" style="display:flex; justify-content:center; align-items:center; background:#eee; color:#666; font-size:0.85em;">
-                            Peta Lokasi Spesies 2
-                        </div>
-                    </div>
-                    <div class="page-footer">Halaman 3</div>
-                </div>
-            </div>
-
-            <!-- ================= SPESIES 2: DESKRIPSI ================= -->
-            <div class="page">
-                <div class="page-content">
-                    <div>
-                        <h2>Spesies Burung Kedua</h2>
-                        <p style="margin:0; font-size: 0.9em;"><strong>Nama Lokal:</strong> Burung Kedua</p>
-                        
-                        <div class="metadata">
-                            <p><strong>Elevasi:</strong> 1.800 mdpl</p>
-                            <p><strong>Habitat:</strong> Hutan Pinus</p>
-                            <p><strong>Waktu Observasi:</strong> Sore hari (15.00 WIB)</p>
-                        </div>
-
-                        <p style="font-size: 0.85em; line-height: 1.5; color: #444;">
-                            Halaman ini contoh penggunaan video vertikal (9:16) di halaman sebelumnya. Ukuran video otomatis menyesuaikan agar tidak meluap keluar buku.
-                        </p>
-                    </div>
-                    <div class="page-footer">Halaman 4</div>
                 </div>
             </div>
 
@@ -338,7 +450,7 @@
     <!-- TOMBOL KONTROL BAWAH -->
     <div class="controls">
         <button onclick="pageFlip.flipPrev()">&larr; Prev</button>
-        <span id="page-num" style="font-size:0.85em; font-weight:600; color:#444;">Hal 1 / 6</span>
+        <span id="page-num" style="font-size:0.85em; font-weight:600; color:#444;">Hal 1 / 4</span>
         <button onclick="pageFlip.flipNext()">Next &rarr;</button>
     </div>
 
@@ -374,8 +486,11 @@
             document.getElementById('page-num').innerText = `Hal ${e.data + 1} / ${pageFlip.getPageCount()}`;
         });
 
-        // Navigasi Keyboard (Panah Kanan & Kiri)
-        document.addEventListener('keydown', (e) => {
+        // PERBAIKAN NAVIGASI KEYBOARD TANGGUH (Diikat pada window utama)
+        window.addEventListener('keydown', (e) => {
+            // Abaikan jika user sedang mengetik di input box (jika ada)
+            if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+
             if (e.key === 'ArrowRight' || e.key === 'PageDown') {
                 pageFlip.flipNext();
             } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
