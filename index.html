@@ -40,7 +40,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 10px;
             width: 100%;
             max-width: 1200px;
         }
@@ -57,12 +57,13 @@
         }
 
         .page-content {
-            padding: 22px;
+            padding: 20px;
             height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .page.--cover {
@@ -73,25 +74,25 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 40px;
+            padding: 30px;
             border: none;
         }
 
         .page.--cover h1 {
-            font-size: 2.2em;
+            font-size: 2em;
             margin-bottom: 10px;
             letter-spacing: 1px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
         }
 
         .page.--cover p {
-            font-size: 1.1em;
+            font-size: 1em;
             opacity: 0.9;
         }
 
         .cover-border {
             border: 2px solid rgba(255,255,255,0.3);
-            padding: 30px;
+            padding: 20px;
             border-radius: 12px;
             width: 100%;
             height: 100%;
@@ -105,7 +106,7 @@
             border-radius: 8px;
             background: #000000;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             display: block;
         }
 
@@ -115,41 +116,31 @@
             object-fit: contain;
         }
 
-        .video-portrait {
-            height: 260px;
-            max-width: 100%;
-            aspect-ratio: 9 / 16;
-            margin-left: auto;
-            margin-right: auto;
-            object-fit: contain;
-        }
-
         .badge-container {
             display: flex;
             gap: 6px;
             align-items: center;
             flex-wrap: wrap;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .badge-iucn {
             background-color: #10b981;
             color: white;
-            font-size: 0.7em;
+            font-size: 0.68em;
             font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 12px;
+            padding: 2px 7px;
+            border-radius: 10px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .badge-tag {
             background-color: #f3f4f6;
             color: #4b5563;
-            font-size: 0.7em;
+            font-size: 0.68em;
             font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 12px;
+            padding: 2px 7px;
+            border-radius: 10px;
             border: 1px solid #e5e7eb;
         }
 
@@ -157,88 +148,82 @@
             margin: 2px 0;
             color: var(--primary-color);
             font-style: italic;
-            font-size: 1.35em;
+            font-size: 1.25em;
             font-weight: 700;
         }
 
         .local-name {
-            font-size: 0.9em;
+            font-size: 0.85em;
             color: var(--text-muted);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .meta-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 6px;
             background-color: var(--primary-light);
-            padding: 12px;
+            padding: 8px 10px;
             border-radius: 8px;
-            border-left: 4px solid var(--primary-color);
-            margin-bottom: 12px;
+            border-left: 3px solid var(--primary-color);
+            margin-bottom: 8px;
         }
 
         .meta-item {
-            font-size: 0.8em;
-            line-height: 1.3;
+            font-size: 0.75em;
+            line-height: 1.25;
         }
 
         .meta-item strong {
             display: block;
             color: var(--primary-color);
-            font-size: 0.85em;
+            font-size: 0.8em;
         }
 
         .info-card {
             background: #fafafa;
             border: 1px solid #f0f0f0;
-            border-radius: 8px;
-            padding: 10px 12px;
-            margin-bottom: 10px;
+            border-radius: 6px;
+            padding: 8px 10px;
+            margin-bottom: 8px;
         }
 
         .info-card-title {
-            font-size: 0.8em;
+            font-size: 0.75em;
             font-weight: 700;
             color: var(--primary-color);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .taxo-list {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 4px 10px;
-            font-size: 0.78em;
+            gap: 2px 8px;
+            font-size: 0.75em;
             color: #4b5563;
         }
 
         .desc-text {
-            font-size: 0.82em;
-            line-height: 1.5;
+            font-size: 0.78em;
+            line-height: 1.4;
             color: #374151;
-            margin: 8px 0;
+            margin: 6px 0;
         }
 
-        .gallery-container { display: flex; gap: 8px; margin-top: 5px; }
+        .gallery-container { display: flex; gap: 6px; margin-top: 4px; }
         .gallery-container img {
-            width: 60px; height: 60px;
+            width: 50px; height: 50px;
             object-fit: cover;
             border-radius: 6px;
             cursor: pointer;
             border: 2px solid #2b580c;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .gallery-container img:hover { 
-            transform: scale(1.08);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
         .audio-player { 
             width: 100%; 
-            height: 36px;
-            margin-top: 6px; 
+            height: 32px;
+            margin-top: 4px; 
             outline: none; 
             border-radius: 20px;
         }
@@ -247,27 +232,28 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            height: 170px;
+            height: 150px;
             border: 1px solid #e5e7eb;
         }
         .map-box iframe { width: 100%; height: 100%; border: 0; }
 
         .page-footer {
-            font-size: 0.75em;
+            font-size: 0.7em;
             color: var(--text-muted);
             text-align: center;
-            padding-top: 8px;
+            padding-top: 6px;
             border-top: 1px dashed #e5e7eb;
-            margin-top: 8px;
+            margin-top: 6px;
         }
 
         .controls {
             display: flex;
             align-items: center;
             gap: 15px;
-            margin-top: 15px;
+            margin-top: 10px;
+            margin-bottom: 15px;
             background: #ffffff;
-            padding: 8px 20px;
+            padding: 6px 16px;
             border-radius: 30px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
@@ -276,14 +262,12 @@
             background: var(--primary-color);
             color: white;
             border: none;
-            padding: 8px 18px;
+            padding: 6px 14px;
             border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
-            transition: background 0.2s;
+            font-size: 0.85em;
         }
-
-        .controls button:hover { background: #1f4208; }
 
         /* MODAL ZOOM FOTO */
         .modal {
@@ -297,9 +281,23 @@
         #gambarMembesar.is-zoomed { cursor: zoom-out; transform: scale(2.2); }
         .modal-hint { color: #d0d0d0; font-size: 0.8em; margin-top: 12px; background: rgba(0,0,0,0.6); padding: 4px 12px; border-radius: 20px; }
 
-        @media (max-width: 768px) {
-            .page-content { padding: 15px; }
-            .map-box { height: 140px; }
+        /* ================= PENYESUAIAN KHUSUS MOBILE (HP) ================= */
+        @media (max-width: 600px) {
+            .book-wrapper { padding: 4px; }
+            .page-content { padding: 10px 12px; }
+            h2.species-title { font-size: 1.1em; }
+            .local-name { font-size: 0.78em; margin-bottom: 6px; }
+            .meta-grid { padding: 6px 8px; margin-bottom: 6px; gap: 4px; }
+            .meta-item { font-size: 0.7em; }
+            .desc-text { font-size: 0.72em; margin: 4px 0; }
+            .info-card { padding: 5px 8px; margin-bottom: 6px; }
+            .info-card-title { font-size: 0.7em; margin-bottom: 2px; }
+            .taxo-list { font-size: 0.68em; }
+            .gallery-container img { width: 42px; height: 42px; }
+            .audio-player { height: 28px; }
+            .map-box { height: 120px; }
+            .controls { padding: 4px 12px; gap: 10px; }
+            .controls button { padding: 5px 12px; font-size: 0.8em; }
         }
     </style>
 </head>
@@ -313,8 +311,8 @@
                 <div class="cover-border">
                     <h1>KATALOG BURUNG</h1>
                     <p>Kawasan Gunung Lawu</p>
-                    <div style="margin-top: 40px; font-size: 0.8em; opacity: 0.7;">
-                        📖 Gunakan panah keyboard (&larr; &rarr;) atau tarik kertas untuk membaca
+                    <div style="margin-top: 30px; font-size: 0.75em; opacity: 0.8;">
+                        📖 Usap layar / klik panah untuk membaca
                     </div>
                 </div>
             </div>
@@ -327,13 +325,13 @@
                             <span class="badge-tag">Dokumentasi Lapangan</span>
                             <span class="badge-tag">Sektor Selatan</span>
                         </div>
-                        <h3 style="margin: 2px 0 10px 0; font-size: 1.1em; color: var(--primary-color);">Pteruthius aenobarbus</h3>
+                        <h3 style="margin: 2px 0 8px 0; font-size: 1em; color: var(--primary-color);">Pteruthius aenobarbus</h3>
                         
                         <video controls playsinline preload="metadata" class="page-video video-landscape">
                             <source src="video/burung1.mp4" type="video/mp4">
                             Browser kamu tidak mendukung pemutar video ini.
                         </video>
-                        <div style="font-size: 0.72em; color: var(--text-muted); text-align: right; margin-top: -6px; margin-bottom: 10px;">
+                        <div style="font-size: 0.68em; color: var(--text-muted); text-align: right; margin-top: -4px; margin-bottom: 8px;">
                             📹 Dokumentasi: Tim Peneliti Internal
                         </div>
 
@@ -376,7 +374,7 @@
                         </div>
 
                         <p class="desc-text">
-                            Burung berukuran kecil yang sangat aktif bergerak di tajuk pohon bagian tengah hingga atas. Memiliki karakteristik suara siulan yang khas berirama cepat.
+                            Burung berukuran kecil yang sangat aktif bergerak di tajuk pohon bagian tengah hingga atas. Memiliki suara siulan khas berirama cepat.
                         </p>
 
                         <div class="info-card">
@@ -391,20 +389,20 @@
 
                         <div class="info-card">
                             <div class="info-card-title">🔍 Ciri Diagnostik</div>
-                            <div style="font-size: 0.78em; color: #4b5563; line-height: 1.4;">
-                                Dahi berwarna kastanye (cokelat kemerahan), alis putih jelas di atas mata gelap. Tubuh bagian bawah kuning keemasan terang.
+                            <div style="font-size: 0.72em; color: #4b5563; line-height: 1.35;">
+                                Dahi berwarna kastanye, alis putih jelas di atas mata gelap. Tubuh bawah kuning keemasan.
                             </div>
                         </div>
 
-                        <div style="margin-top: 10px;">
-                            <strong style="font-size: 0.78em; color: var(--primary-color);">📷 Foto Referensi (Klik untuk Zoom):</strong>
+                        <div style="margin-top: 6px;">
+                            <strong style="font-size: 0.72em; color: var(--primary-color);">📷 Foto Referensi (Klik Zoom):</strong>
                             <div class="gallery-container">
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg" class="btn-zoom-foto" data-src="https://upload.wikimedia.org/wikipedia/commons/d/db/White-browed_Shrike-babbler_a_silent_hunter_woven_into_the_Himalayan_shadows_03.jpg">
                             </div>
                         </div>
 
-                        <div style="margin-top: 8px;">
-                            <strong style="font-size: 0.78em; color: var(--primary-color);">🎵 Bioakustik / Suara Panggilan:</strong>
+                        <div style="margin-top: 6px;">
+                            <strong style="font-size: 0.72em; color: var(--primary-color);">🎵 Bioakustik / Suara:</strong>
                             <audio controls class="audio-player">
                                 <source src="audio-burung-ciu.mp3" type="audio/mpeg">
                             </audio>
@@ -418,7 +416,7 @@
             <div class="page --cover" data-density="hard">
                 <div class="cover-border">
                     <h2>TERIMA KASIH</h2>
-                    <p style="font-size: 0.9em;">Katalog Keanekaragaman Hayati<br>Gunung Lawu</p>
+                    <p style="font-size: 0.85em;">Katalog Keanekaragaman Hayati<br>Gunung Lawu</p>
                 </div>
             </div>
 
@@ -428,7 +426,7 @@
     <!-- TOMBOL KONTROL BAWAH -->
     <div class="controls">
         <button onclick="pageFlip.flipPrev()">&larr; Prev</button>
-        <span id="page-num" style="font-size:0.85em; font-weight:600; color:#444;">Hal 1 / 4</span>
+        <span id="page-num" style="font-size:0.8em; font-weight:600; color:#444;">Hal 1 / 4</span>
         <button onclick="pageFlip.flipNext()">Next &rarr;</button>
     </div>
 
@@ -438,7 +436,7 @@
         <div class="modal-content-wrapper">
             <img id="gambarMembesar" src="" onclick="toggleZoom(event)">
         </div>
-        <div class="modal-hint">💡 Klik foto untuk perbesar detail | Klik luar untuk tutup</div>
+        <div class="modal-hint">💡 Klik foto untuk perbesar | Klik luar untuk tutup</div>
     </div>
 
     <script>
@@ -447,9 +445,9 @@
             width: 450,
             height: 600,
             size: "stretch",
-            minWidth: 300,
+            minWidth: 280,
             maxWidth: 550,
-            minHeight: 450,
+            minHeight: 420,
             maxHeight: 750,
             maxShadowOpacity: 0.5,
             showCover: true,
@@ -474,9 +472,8 @@
             }
         });
 
-        // ================= KUNCI PERBAIKAN FOTO & ELEMEN INTERAKTIF =================
-        // Bloking event pointerdown/mousedown/touchstart agar PageFlip mengabaikan klik pada media
-        const interactiveElements = document.querySelectorAll('.gallery-container img, video, audio, iframe, .modal');
+        // PENGAMAN TOUCH & KLIK UNTUK ELEMEN INTERAKTIF
+        const interactiveElements = document.querySelectorAll('.gallery-container img, video, audio, iframe, .modal, .page-content');
         interactiveElements.forEach(el => {
             ['pointerdown', 'mousedown', 'touchstart'].forEach(eventType => {
                 el.addEventListener(eventType, (e) => {
@@ -485,7 +482,7 @@
             });
         });
 
-        // Event Handler Khusus Klik Foto Zoom
+        // Event Handler Klik Zoom Foto
         document.querySelectorAll('.btn-zoom-foto').forEach(img => {
             img.addEventListener('click', (e) => {
                 e.stopPropagation();
