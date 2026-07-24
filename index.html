@@ -62,7 +62,6 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
 
-        /* PERBAIKAN VIDEO BOX AGAR FIT DI HP (SAFARI / ANDROID) */
         .video-box { 
             grid-column: 1; 
             grid-row: 1; 
@@ -71,14 +70,18 @@
             width: 100%;
             height: 100%;
             box-sizing: border-box;
+            /* Memastikan sentuhan jari tidak terhalang di Desktop & HP */
+            touch-action: auto !important;
+            pointer-events: auto !important;
         }
 
-        /* Mengunci tinggi iframe agar video tidak hilang/layar hitam saat diputar */
         .video-box iframe { 
             width: 100%; 
             height: calc(100% - 26px); 
             border: 0; 
             display: block; 
+            touch-action: auto !important;
+            pointer-events: auto !important;
         }
 
         .video-source {
@@ -155,7 +158,6 @@
             cursor: pointer;
             z-index: 2001;
         }
-        .close-modal:hover { color: #bbb; }
 
         .modal-content-wrapper {
             position: relative;
@@ -192,7 +194,7 @@
             pointer-events: none;
         }
 
-        /* --- KHUSUS TAMPILAN HP (IPHONE & ANDROID) --- */
+        /* --- KHUSUS TAMPILAN HP (OPTIMASI IOS SAFARI & ANDROID) --- */
         @media (max-width: 768px) {
             .grid-layout {
                 display: flex;
@@ -203,10 +205,12 @@
                 box-sizing: border-box;
             }
 
+            /* Menggunakan Aspect Ratio 16:9 agar video fit & stabil di Safari */
             .video-box {
                 width: 100%;
-                height: 220px;
-                min-height: 220px;
+                aspect-ratio: 16 / 9;
+                height: auto !important;
+                min-height: unset !important;
                 flex-shrink: 0;
             }
 
@@ -227,10 +231,10 @@
                 background-color: #e5e3df;
             }
 
-            .map-box iframe {
-                width: 100%;
-                height: 100%;
-                min-height: 220px;
+            /* Geser tombol panah navigasi Swiper agar tidak menutupi area video */
+            .swiper-button-next, .swiper-button-prev {
+                top: 15% !important;
+                transform: scale(0.7);
             }
         }
     </style>
@@ -244,11 +248,10 @@
             <div class="swiper-slide">
                 <div class="grid-layout">
                     
-                    <!-- KOTAK VIDEO GOOGLE DRIVE & SUMBER -->
-                    <div class="video-box">
-                        <iframe class="swiper-no-swiping" src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" allow="autoplay; fullscreen" allowfullscreen></iframe> 
+                    <!-- KOTAK VIDEO DENGAN SWIPER-NO-SWIPING LANGSUNG DI KONTAINER -->
+                    <div class="video-box swiper-no-swiping">
+                        <iframe src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" allow="autoplay; fullscreen" allowfullscreen></iframe> 
                         
-                        <!-- KETERANGAN SUMBER VIDEO -->
                         <div class="video-source">
                             Sumber Video: <strong>Tim Peneliti Internal / Lapangan</strong>
                         </div>
@@ -299,8 +302,8 @@
             <div class="swiper-slide">
                 <div class="grid-layout">
                     
-                    <div class="video-box">
-                        <iframe class="swiper-no-swiping" src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" allow="autoplay; fullscreen" allowfullscreen></iframe> 
+                    <div class="video-box swiper-no-swiping">
+                        <iframe src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" allow="autoplay; fullscreen" allowfullscreen></iframe> 
                         <div class="video-source">
                             Sumber Video: <strong>Sumber Eksternal / Macaulay Library</strong>
                         </div>
@@ -347,6 +350,9 @@
             
             noSwiping: true,
             noSwipingClass: 'swiper-no-swiping',
+            
+            /* SANGAT KRUSIAL: Mencegah Swiper memblokir gesture ketukan jari di iOS Safari */
+            touchStartPreventDefault: false,
             
             keyboard: {
                 enabled: true,
