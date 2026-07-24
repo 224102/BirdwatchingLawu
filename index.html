@@ -49,7 +49,7 @@
         .grid-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-template-rows: 55% 45%; 
+            grid-template-rows: auto 1fr; /* Baris atas mengikuti rasio asli video */
             gap: 15px;
             height: 100%;
             padding: 20px 60px; 
@@ -62,66 +62,56 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
 
-        /* KOTAK KONTEN VIDEO DENGAN BACKGROUND HITAM */
+        /* KOTAK KONTEN VIDEO */
         .video-box { 
             grid-column: 1; 
             grid-row: 1; 
             background: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             width: 100%;
-            height: 100%;
-            position: relative;
+            /* Tidak ada height fix disini, biar mengikuti rasio iframe */
         }
 
+        /* --- SOLUSI MUTLAK IFRAME GOOGLE DRIVE --- */
         .iframe-wrapper {
             position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            max-width: 100%;
-            max-height: 100%;
             width: 100%;
-            flex: 1;
+            height: 0; /* Tinggi diatur oleh padding-bottom */
+            overflow: hidden;
+        }
+
+        /* Kelas untuk Video Horizontal 16:9 */
+        .ratio-16-9 {
+            padding-bottom: 56.25%; /* Menghasilkan bentuk 16:9 sempurna */
+        }
+
+        /* Kelas untuk Video Vertikal 9:16 (Jika butuh nanti) */
+        .ratio-9-16 {
+            padding-bottom: 177.78%; /* Menghasilkan bentuk 9:16 sempurna */
         }
 
         .iframe-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             border: 0;
-            touch-action: auto !important;
-            pointer-events: auto !important;
         }
-
-        /* --- KELAS RASIO VIDEO (Bisa Dipilih Per Slide) --- */
-        .ratio-16-9 {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-        }
-
-        .ratio-9-16 {
-            height: 100%;
-            aspect-ratio: 9 / 16;
-            max-width: 100%;
-        }
+        /* ------------------------------------------- */
 
         .video-source {
             background-color: #1a1a1a;
             color: #b0b0b0;
             font-size: 0.75em;
-            padding: 6px 10px;
+            padding: 8px 10px;
             text-align: right;
             border-top: 1px solid #333;
-            width: 100%;
-            box-sizing: border-box;
-            flex-shrink: 0;
+            display: block;
         }
 
         .desc-box {
             grid-column: 2; 
-            grid-row: 1;
+            grid-row: 1 / span 2; /* Di desktop biar nyambung ke bawah */
             background: #f9fbf8;
             padding: 15px 20px;
             border-left: 5px solid var(--primary-color);
@@ -155,8 +145,8 @@
 
         .audio-player { width: 100%; margin-top: 5px; }
 
-        .map-box { grid-column: 1 / span 2; grid-row: 2; }
-        .map-box iframe { width: 100%; height: 100%; border: 0; display: block; }
+        .map-box { grid-column: 1; grid-row: 2; }
+        .map-box iframe { width: 100%; height: 100%; border: 0; display: block; min-height: 200px; }
 
         /* --- STYLES MODAL DETAIL ZOOM --- */
         .modal {
@@ -230,23 +220,8 @@
 
             .video-box {
                 width: 100%;
-                height: auto;
-                flex-shrink: 0;
-            }
-
-            .ratio-16-9 {
-                width: 100%;
-                height: auto;
-                aspect-ratio: 16 / 9;
-            }
-
-            /* Agar video vertikal di HP tidak terlalu tinggi & menutup layar */
-            .ratio-9-16 {
-                width: auto;
-                height: 55vh;
-                max-width: 100%;
-                aspect-ratio: 9 / 16;
-                margin: 0 auto;
+                /* Video-box akan otomatis mengikuti tinggi iframe-wrapper yang murni 16:9 */
+                flex-shrink: 0; 
             }
 
             .desc-box {
@@ -277,12 +252,12 @@
     <div class="swiper">
         <div class="swiper-wrapper">
 
-            <!-- ================= HALAMAN 1 (CONTOH VIDEO 16:9 / LANSKAP) ================= -->
+            <!-- ================= HALAMAN 1 ================= -->
             <div class="swiper-slide">
                 <div class="grid-layout">
                     
                     <div class="video-box swiper-no-swiping">
-                        <!-- Gunakan kelas ratio-16-9 untuk video lanskap -->
+                        <!-- Disini kita pakai class ratio-16-9 untuk memastikan bentuknya 16:9 presisi -->
                         <div class="iframe-wrapper ratio-16-9">
                             <iframe src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
                         </div>
@@ -293,7 +268,7 @@
 
                     <div class="desc-box">
                         <h2>Pteruthius aenobarbus</h2>
-                        <p style="margin:0; font-size: 0.9em;"><strong>Nama Lokal:</strong> Ciu Kuning (16:9)</p>
+                        <p style="margin:0; font-size: 0.9em;"><strong>Nama Lokal:</strong> Ciu Kuning</p>
                         
                         <div class="metadata">
                             <p><strong>Elevasi:</strong> 2.400 mdpl</p>
@@ -328,39 +303,8 @@
             </div>
             <!-- ================= AKHIR HALAMAN 1 ================= -->
 
-            <!-- ================= HALAMAN 2 (CONTOH VIDEO 9:16 / VERTIKAL) ================= -->
-            <div class="swiper-slide">
-                <div class="grid-layout">
-                    
-                    <div class="video-box swiper-no-swiping">
-                        <!-- Gunakan kelas ratio-9-16 untuk video vertikal -->
-                        <div class="iframe-wrapper ratio-16-9">
-                            <iframe src="https://drive.google.com/file/d/1IBbVfgd6t9GdlQSSI2yHt2_9SQhLtW0c/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                        </div>
-                        <div class="video-source">
-                            Sumber Video: <strong>Dokumentasi Vertikal (16:9)</strong>
-                        </div>
-                    </div>
-
-                    <div class="desc-box">
-                        <h2>Burung Spesies 2</h2>
-                        <p style="margin:0; font-size: 0.9em;"><strong>Nama Lokal:</strong> Burung Vertikal (9:16)</p>
-                        <p style="font-size: 0.85em; margin-top: 10px;">Slide ini menggunakan format video vertikal 9:16. Di desktop video akan berada rapi di tengah dengan bilah hitam di kanan-kiri, dan di HP deskripsi akan tetap berada tepat di bawahnya.</p>
-                    </div>
-
-                    <div class="map-box" style="display:flex; justify-content:center; align-items:center; background:#ddd;">
-                        <p>Peta Lokasi 2 Di Sini</p>
-                    </div>
-
-                </div>
-            </div>
-            <!-- ================= AKHIR HALAMAN 2 ================= -->
-
         </div>
         
-        <!-- Navigasi Slider -->
-        <div class="swiper-button-next" style="color: var(--primary-color); font-weight: bold;"></div>
-        <div class="swiper-button-prev" style="color: var(--primary-color); font-weight: bold;"></div>
         <div class="swiper-pagination"></div>
     </div>
 
@@ -391,10 +335,6 @@
                 enabled: true,
             },
             
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
             pagination: {
                 el: '.swiper-pagination',
                 clickable: true,
